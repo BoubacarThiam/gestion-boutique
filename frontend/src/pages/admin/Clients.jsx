@@ -47,7 +47,7 @@ export default function Clients() {
                   <div className="min-w-0">
                     <p className="font-semibold text-gray-800">{c.nom}</p>
                     <p className="text-sm text-gray-500">{c.telephone}</p>
-                    {c.adresse && <p className="truncate text-sm text-gray-400">📍 {c.adresse}</p>}
+                    {c.adresse && <p className="truncate text-sm text-gray-500">📍 {c.adresse}</p>}
                   </div>
                   <Badge classe="bg-marque-50 text-marque-700">{c.nombre_commandes} commande(s)</Badge>
                 </button>
@@ -76,7 +76,7 @@ export default function Clients() {
                   <li key={cmd.id} className="flex items-center justify-between py-2">
                     <div>
                       <p className="font-medium text-gray-800">{cmd.numero_commande}</p>
-                      <p className="text-xs text-gray-400">{formaterDateCourte(cmd.created_at)}</p>
+                      <p className="text-xs text-gray-500">{formaterDateCourte(cmd.created_at)}</p>
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       <Badge classe={infosStatut(cmd.statut).classe}>{infosStatut(cmd.statut).libelle}</Badge>

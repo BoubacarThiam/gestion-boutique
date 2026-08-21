@@ -7,7 +7,7 @@ export default function CarteProduit({ produit }) {
   return (
     <Link
       to={`/produit/${produit.id}`}
-      className="carte group flex flex-col overflow-hidden transition hover:shadow-md"
+      className="carte group flex flex-col overflow-hidden transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-elevee"
     >
       <div className="aspect-square w-full overflow-hidden bg-gray-100">
         {produit.image_url ? (
@@ -15,7 +15,7 @@ export default function CarteProduit({ produit }) {
             src={urlFichier(produit.image_url)}
             alt={produit.nom}
             loading="lazy"
-            className="h-full w-full object-cover transition group-hover:scale-105"
+            className="h-full w-full object-cover transition duration-300 ease-out group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-4xl text-gray-300">🖼️</div>

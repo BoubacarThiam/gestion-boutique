@@ -128,7 +128,7 @@ export default function Utilisateurs() {
           </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-gray-700">
-              Mot de passe {edition && <span className="font-normal text-gray-400">(laisser vide pour ne pas changer)</span>}
+              Mot de passe {edition && <span className="font-normal text-gray-500">(laisser vide pour ne pas changer)</span>}
             </label>
             <input type="password" value={formulaire.mot_de_passe} onChange={(e) => setFormulaire({ ...formulaire, mot_de_passe: e.target.value })} className="champ" placeholder="Minimum 6 caractères" />
           </div>

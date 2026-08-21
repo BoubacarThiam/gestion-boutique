@@ -127,7 +127,7 @@ export default function Stock() {
                 <div className="min-w-0">
                   <p className="font-semibold text-gray-800">{m.produit_nom}</p>
                   <p className="truncate text-sm text-gray-500">{m.motif || '—'} · {m.utilisateur_nom || 'Système'}</p>
-                  <p className="text-xs text-gray-400">{formaterDate(m.created_at)}</p>
+                  <p className="text-xs text-gray-500">{formaterDate(m.created_at)}</p>
                 </div>
                 <Badge classe={m.type === 'entree' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}>
                   {m.type === 'entree' ? '+' : '−'}{m.quantite}

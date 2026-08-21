@@ -3,6 +3,8 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { ErreurApi } from '../../api/client'
 import Alerte from '../../components/ui/Alerte'
+import logo from '../../assets/logo-tdmgbc.jpg'
+import fondConnexion from '../../assets/connexion-fond.jpg'
 
 /** Connexion de l'espace gestion (admin / employé). Pas d'inscription publique. */
 export default function Connexion() {
@@ -34,9 +36,19 @@ export default function Connexion() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="carte w-full max-w-sm p-6">
-        <h1 className="text-center text-2xl font-bold text-gray-900">Espace gestion</h1>
+    <div
+      className="flex min-h-screen items-center justify-center bg-marque-950 bg-cover bg-center px-4"
+      style={{
+        backgroundImage: `linear-gradient(to bottom, rgba(25,4,3,0.45), rgba(25,4,3,0.80)), url(${fondConnexion})`,
+      }}
+    >
+      <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/95 p-6 shadow-elevee backdrop-blur-sm sm:p-8">
+        <img
+          src={logo}
+          alt="TDMGBC"
+          className="mx-auto mb-4 h-20 w-20 rounded-full object-cover shadow-soft ring-4 ring-or-100"
+        />
+        <h1 className="text-center text-2xl font-display font-bold tracking-tight text-gray-900">Espace gestion</h1>
         <p className="mb-6 text-center text-sm text-gray-500">Réservé au propriétaire et aux employés</p>
 
         <Alerte>{erreur}</Alerte>

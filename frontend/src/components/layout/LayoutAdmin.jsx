@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { dashboardApi } from '../../api/dashboard'
+import logo from '../../assets/logo-tdmgbc.jpg'
 
 const LIENS = [
   { to: '/gestion', label: 'Tableau de bord', icone: '📊', fin: true },
@@ -55,8 +56,8 @@ export default function LayoutAdmin() {
           end={lien.fin}
           onClick={() => setMenuOuvert(false)}
           className={({ isActive }) =>
-            `flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition ${
-              isActive ? 'bg-marque-600 text-white' : 'text-gray-700 hover:bg-gray-100'
+            `flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition duration-150 ease-out ${
+              isActive ? 'bg-marque-600 text-white shadow-soft' : 'text-gray-700 hover:bg-gray-100'
             }`
           }
         >
@@ -76,9 +77,12 @@ export default function LayoutAdmin() {
     <div className="flex min-h-screen bg-gray-50">
       {/* Barre latérale desktop */}
       <aside className="hidden w-64 flex-col border-r border-gray-200 bg-white sm:flex">
-        <div className="border-b border-gray-100 px-5 py-4">
-          <p className="font-bold text-marque-700">Espace gestion</p>
-          <p className="truncate text-sm text-gray-500">{utilisateur?.nom}</p>
+        <div className="flex items-center gap-3 border-b border-marque-100 px-5 py-4">
+          <img src={logo} alt="TDMGBC" className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-marque-100" />
+          <div className="min-w-0">
+            <p className="font-display font-bold tracking-tight text-marque-700">Espace gestion</p>
+            <p className="truncate text-sm text-gray-500">{utilisateur?.nom}</p>
+          </div>
         </div>
         {contenuNav}
         <div className="border-t border-gray-100 p-3">
@@ -92,13 +96,16 @@ export default function LayoutAdmin() {
       {menuOuvert && (
         <div className="fixed inset-0 z-40 sm:hidden">
           <div className="absolute inset-0 bg-black/40" onClick={() => setMenuOuvert(false)} />
-          <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-white shadow-xl">
+          <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-white shadow-elevee">
             <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
-              <div>
-                <p className="font-bold text-marque-700">Espace gestion</p>
-                <p className="truncate text-sm text-gray-500">{utilisateur?.nom}</p>
+              <div className="flex items-center gap-3 min-w-0">
+                <img src={logo} alt="TDMGBC" className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-marque-100" />
+                <div className="min-w-0">
+                  <p className="font-display font-bold tracking-tight text-marque-700">Espace gestion</p>
+                  <p className="truncate text-sm text-gray-500">{utilisateur?.nom}</p>
+                </div>
               </div>
-              <button onClick={() => setMenuOuvert(false)} className="rounded-full p-2 text-gray-400 hover:bg-gray-100" aria-label="Fermer le menu">✕</button>
+              <button onClick={() => setMenuOuvert(false)} className="rounded-full p-2 text-gray-500 hover:bg-gray-100" aria-label="Fermer le menu">✕</button>
             </div>
             {contenuNav}
             <div className="border-t border-gray-100 p-3">
@@ -119,7 +126,7 @@ export default function LayoutAdmin() {
           >
             ☰
           </button>
-          <p className="font-bold text-marque-700">Espace gestion</p>
+          <p className="font-display font-bold tracking-tight text-marque-700">Espace gestion</p>
           <div className="w-9" />
         </header>
 

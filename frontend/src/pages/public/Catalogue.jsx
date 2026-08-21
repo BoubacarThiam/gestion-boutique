@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react'
 import { catalogueApi } from '../../api/public'
+import { urlFichier } from '../../api/client'
 import CarteProduit from '../../components/produits/CarteProduit'
+import CarteProduitLunette from '../../components/produits/CarteProduitLunette'
 import Spinner from '../../components/ui/Spinner'
 import EtatVide from '../../components/ui/EtatVide'
 import Alerte from '../../components/ui/Alerte'
+import ScrollChoreography from '../../components/ui/ScrollChoreography'
+
+// 4 photos vitrine pour l'animation de la section Montres (voir plus bas).
+const IMAGES_HERO_MONTRES = {
+  topLeft: urlFichier('/uploads/produits/produit_salcir_05_1787317483e.jpeg'),
+  topRight: urlFichier('/uploads/produits/produit_salcir_11_1787317483k.jpeg'),
+  bottomLeft: urlFichier('/uploads/produits/produit_salcir_07_1787317483g.jpeg'),
+  bottomRight: urlFichier('/uploads/produits/produit_salcir_08_1787317483h.jpeg'),
+}
 
 /** Page d'accueil publique : catalogue filtrable par catégorie + recherche. */
 export default function Catalogue() {
@@ -35,6 +46,14 @@ export default function Catalogue() {
 
     return () => clearTimeout(idTimeout)
   }, [categorieActive, recherche])
+
+  // Anime uniquement quand la catégorie "Montres" est sélectionnée.
+  const categorieMontres = categories.find((c) => c.nom === 'Montres')
+  const afficherAnimationMontres = categorieMontres && categorieActive === categorieMontres.id
+
+  // Halo lumineux (GlowCard) uniquement quand la catégorie "Lunettes" est sélectionnée.
+  const categorieLunettes = categories.find((c) => c.nom === 'Lunettes')
+  const afficherGlowLunettes = categorieLunettes && categorieActive === categorieLunettes.id
 
   return (
     <div className="flex flex-col gap-5">
@@ -76,15 +95,27 @@ export default function Catalogue() {
 
       <Alerte>{erreur}</Alerte>
 
+      {afficherAnimationMontres && (
+        // Casse la largeur max/padding du <main> parent pour occuper tout l'écran,
+        // nécessaire aux unités vw utilisées par l'animation.
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+          <ScrollChoreography images={IMAGES_HERO_MONTRES} />
+        </div>
+      )}
+
       {chargement ? (
         <div className="flex justify-center py-12"><Spinner taille={32} /></div>
       ) : produits.length === 0 ? (
         <EtatVide titre="Aucun produit trouvé" description="Essayez une autre catégorie ou un autre mot-clé." />
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-          {produits.map((p) => (
-            <CarteProduit key={p.id} produit={p} />
-          ))}
+          {produits.map((p) =>
+            afficherGlowLunettes ? (
+              <CarteProduitLunette key={p.id} produit={p} />
+            ) : (
+              <CarteProduit key={p.id} produit={p} />
+            )
+          )}
         </div>
       )}
     </div>

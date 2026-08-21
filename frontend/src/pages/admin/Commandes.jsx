@@ -61,7 +61,7 @@ export default function Commandes() {
                   <div className="min-w-0">
                     <p className="font-semibold text-gray-800">{c.numero_commande}</p>
                     <p className="truncate text-sm text-gray-500">{c.client_nom} · {c.client_telephone}</p>
-                    <p className="text-xs text-gray-400">{formaterDate(c.created_at)}</p>
+                    <p className="text-xs text-gray-500">{formaterDate(c.created_at)}</p>
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-1">
                     <Badge classe={infosStatut(c.statut).classe}>{infosStatut(c.statut).libelle}</Badge>

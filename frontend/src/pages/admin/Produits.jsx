@@ -149,7 +149,7 @@ export default function Produits() {
                     {p.quantite_stock <= p.seuil_alerte && <Badge classe="bg-amber-100 text-amber-700">Stock bas</Badge>}
                   </div>
                   <p className="text-sm text-gray-500">{p.categorie_nom} · {formaterFCFA(p.prix_vente)}</p>
-                  <p className="text-sm text-gray-400">{p.quantite_stock} en stock</p>
+                  <p className="text-sm text-gray-500">{p.quantite_stock} en stock</p>
                 </div>
                 {estAdmin && (
                   <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -198,7 +198,7 @@ export default function Produits() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="mb-1 block text-sm font-semibold text-gray-700">
-                Stock initial {edition && <span className="font-normal text-gray-400">(non modifiable ici)</span>}
+                Stock initial {edition && <span className="font-normal text-gray-500">(non modifiable ici)</span>}
               </label>
               <input
                 type="number"
@@ -208,7 +208,7 @@ export default function Produits() {
                 onChange={(e) => setFormulaire({ ...formulaire, quantite_stock: e.target.value })}
                 className="champ disabled:bg-gray-100"
               />
-              {edition && <p className="mt-1 text-xs text-gray-400">Utilisez la page Stock pour ajuster la quantité.</p>}
+              {edition && <p className="mt-1 text-xs text-gray-500">Utilisez la page Stock pour ajuster la quantité.</p>}
             </div>
             <div>
               <label className="mb-1 block text-sm font-semibold text-gray-700">Seuil d'alerte</label>
