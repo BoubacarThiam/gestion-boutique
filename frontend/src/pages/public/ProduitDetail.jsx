@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { catalogueApi } from '../../api/public'
-import { urlFichier } from '../../api/client'
 import { usePanier } from '../../context/PanierContext'
 import { formaterFCFA } from '../../utils/format'
 import Spinner from '../../components/ui/Spinner'
 import Alerte from '../../components/ui/Alerte'
+import ImageProduit from '../../components/ui/ImageProduit'
 
 /** Fiche produit détaillée avec ajout au panier. */
 export default function ProduitDetail() {
@@ -47,13 +47,7 @@ export default function ProduitDetail() {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2">
-      <div className="aspect-square overflow-hidden rounded-2xl bg-gray-100">
-        {produit.image_url ? (
-          <img src={urlFichier(produit.image_url)} alt={produit.nom} className="h-full w-full object-cover" />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-6xl text-gray-300">🖼️</div>
-        )}
-      </div>
+      <ImageProduit chemin={produit.image_url} alt={produit.nom} className="aspect-square rounded-2xl" tailleRepli="text-6xl" />
 
       <div className="flex flex-col gap-4">
         <div>

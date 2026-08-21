@@ -98,6 +98,27 @@
   border-width: 10px;
 }
 
+/* Reflet de chargement (components/ui/ImageProduit.jsx) : balaie le
+   squelette gris pendant qu'une photo produit charge. Overlay transparent
+   -> blanc -> transparent (plutôt que calé sur les tons exacts du gris de
+   marque) : reste correct quel que soit le fond, et évite les pièges de
+   parsing des dégradés Tailwind en valeur arbitraire (theme() imbriqué). */
+.reflet-chargement {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.65) 50%, transparent 65%);
+  background-size: 200% 100%;
+  animation: reflet 1.6s ease-in-out infinite;
+}
+
+/* Définie ici en CSS brut (et non dans tailwind.config.js) : uniquement
+   référencée par la règle ci-dessus, pas par une classe `animate-*` — le
+   JIT de Tailwind ne l'aurait donc jamais émise depuis le thème. */
+@keyframes reflet {
+  0% { background-position: 150% 0; }
+  100% { background-position: -150% 0; }
+}
+
 @layer components {
   /* Boutons génériques réutilisés partout dans l'app */
   .btn {

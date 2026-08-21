@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { catalogueApi } from '../../api/public'
 import { urlFichier } from '../../api/client'
 import CarteProduit from '../../components/produits/CarteProduit'
@@ -7,6 +8,15 @@ import Spinner from '../../components/ui/Spinner'
 import EtatVide from '../../components/ui/EtatVide'
 import Alerte from '../../components/ui/Alerte'
 import ScrollChoreography from '../../components/ui/ScrollChoreography'
+
+// Grille de résultats : les cartes apparaissent en cascade (fondu + léger
+// glissement) plutôt que toutes d'un coup — rejoue à chaque changement de
+// filtre puisque chaque nouveau produit affiché monte avec un id inédit.
+const VARIANTES_GRILLE = { cache: {}, visible: { transition: { staggerChildren: 0.045 } } }
+const VARIANTE_CARTE = {
+  cache: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+}
 
 // 4 photos vitrine pour l'animation de la section Montres (voir plus bas).
 const IMAGES_HERO_MONTRES = {
@@ -24,6 +34,7 @@ export default function Catalogue() {
   const [recherche, setRecherche] = useState('')
   const [chargement, setChargement] = useState(true)
   const [erreur, setErreur] = useState('')
+  const motionReduit = useReducedMotion()
 
   useEffect(() => {
     catalogueApi.categories().then((d) => setCategories(d.categories)).catch(() => {})
@@ -108,15 +119,18 @@ export default function Catalogue() {
       ) : produits.length === 0 ? (
         <EtatVide titre="Aucun produit trouvé" description="Essayez une autre catégorie ou un autre mot-clé." />
       ) : (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-          {produits.map((p) =>
-            afficherGlowLunettes ? (
-              <CarteProduitLunette key={p.id} produit={p} />
-            ) : (
-              <CarteProduit key={p.id} produit={p} />
-            )
-          )}
-        </div>
+        <motion.div
+          variants={motionReduit ? undefined : VARIANTES_GRILLE}
+          initial={motionReduit ? false : 'cache'}
+          animate="visible"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4"
+        >
+          {produits.map((p) => (
+            <motion.div key={p.id} variants={motionReduit ? undefined : VARIANTE_CARTE}>
+              {afficherGlowLunettes ? <CarteProduitLunette produit={p} /> : <CarteProduit produit={p} />}
+            </motion.div>
+          ))}
+        </motion.div>
       )}
     </div>
   )

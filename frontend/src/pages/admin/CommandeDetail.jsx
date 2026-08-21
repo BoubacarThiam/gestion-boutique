@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { commandesApi } from '../../api/commandes'
-import { urlFichier, ErreurApi } from '../../api/client'
+import { ErreurApi } from '../../api/client'
 import { useAuth } from '../../context/AuthContext'
 import Spinner from '../../components/ui/Spinner'
 import Alerte from '../../components/ui/Alerte'
 import Badge from '../../components/ui/Badge'
+import ImageProduit from '../../components/ui/ImageProduit'
 import { formaterFCFA, formaterDate } from '../../utils/format'
 import { infosStatut } from '../../utils/statuts'
 
@@ -108,13 +109,7 @@ export default function CommandeDetail() {
         <ul className="divide-y divide-gray-100 p-4 pt-2">
           {lignes.map((l) => (
             <li key={l.produit_id} className="flex items-center gap-3 py-3">
-              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-gray-100">
-                {l.image_url ? (
-                  <img src={urlFichier(l.image_url)} alt={l.nom_produit} className="h-full w-full object-cover" />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-xl text-gray-300">🖼️</div>
-                )}
-              </div>
+              <ImageProduit chemin={l.image_url} alt={l.nom_produit} className="h-12 w-12 shrink-0 rounded-lg" tailleRepli="text-xl" />
               <div className="flex-1">
                 <p className="font-medium text-gray-800">{l.nom_produit}</p>
                 <p className="text-sm text-gray-500">{l.quantite} × {formaterFCFA(l.prix_unitaire)}</p>

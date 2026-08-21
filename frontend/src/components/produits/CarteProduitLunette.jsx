@@ -1,28 +1,19 @@
 import { Link } from 'react-router-dom'
-import { urlFichier } from '../../api/client'
 import { formaterFCFA } from '../../utils/format'
 import GlowCard from '../ui/GlowCard'
+import ImageProduit from '../ui/ImageProduit'
 
 /**
  * Variante de CarteProduit avec halo lumineux au survol (GlowCard) —
- * réservée à la catégorie Lunettes (voir Catalogue.jsx).
+ * réservée à la catégorie Lunettes (voir Catalogue.jsx). `group` porté par
+ * GlowCard (et non le <Link>, en `display: contents`) pour que le zoom au
+ * survol de ImageProduit se déclenche de façon fiable.
  */
 export default function CarteProduitLunette({ produit }) {
   return (
-    <GlowCard glowColor="marque" customSize className="overflow-hidden bg-white p-0">
+    <GlowCard glowColor="marque" customSize className="group overflow-hidden bg-white p-0">
       <Link to={`/produit/${produit.id}`} className="contents">
-        <div className="aspect-square w-full overflow-hidden bg-gray-100">
-          {produit.image_url ? (
-            <img
-              src={urlFichier(produit.image_url)}
-              alt={produit.nom}
-              loading="lazy"
-              className="h-full w-full object-cover transition duration-300 ease-out hover:scale-105"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-4xl text-gray-300">🖼️</div>
-          )}
-        </div>
+        <ImageProduit chemin={produit.image_url} alt={produit.nom} className="aspect-square w-full" tailleRepli="text-4xl" zoom />
         <div className="flex flex-col gap-1 p-3">
           <p className="line-clamp-2 font-semibold text-gray-800">{produit.nom}</p>
           <p className="mt-auto text-lg font-bold text-marque-700">{formaterFCFA(produit.prix_vente)}</p>

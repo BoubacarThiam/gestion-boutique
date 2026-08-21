@@ -67,6 +67,35 @@ module.exports = {
         soft: '0 1px 2px 0 rgb(48 15 10 / 0.06), 0 8px 24px -8px rgb(48 15 10 / 0.14)',
         elevee: '0 4px 12px -2px rgb(48 15 10 / 0.10), 0 16px 40px -12px rgb(48 15 10 / 0.22)',
       },
+      keyframes: {
+        // Zoom/pan très lent sur les visuels de fond plein écran (Connexion) —
+        // donne une impression de mouvement sans jamais gêner la lecture.
+        kenburns: {
+          '0%, 100%': { transform: 'scale(1) translate(0, 0)' },
+          '50%': { transform: 'scale(1.08) translate(-1%, -1%)' },
+        },
+        // Petit "pop" d'accusé de réception (ex : badge panier qui change).
+        pop: {
+          '0%': { transform: 'scale(0.5)', opacity: '0' },
+          '60%': { transform: 'scale(1.15)', opacity: '1' },
+          '100%': { transform: 'scale(1)' },
+        },
+        // Tiroir (menu mobile) : glisse depuis le bord plutôt que d'apparaître d'un coup.
+        tiroir: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        voile: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        kenburns: 'kenburns 22s ease-in-out infinite',
+        pop: 'pop 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+        tiroir: 'tiroir 0.28s cubic-bezier(0.16, 1, 0.3, 1)',
+        voile: 'voile 0.2s ease-out',
+      },
     },
   },
   plugins: [],

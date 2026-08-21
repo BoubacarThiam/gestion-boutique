@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { produitsApi } from '../../api/produits'
 import { categoriesApi } from '../../api/categories'
-import { urlFichier, ErreurApi } from '../../api/client'
+import { ErreurApi } from '../../api/client'
 import { useAuth } from '../../context/AuthContext'
 import Spinner from '../../components/ui/Spinner'
 import EtatVide from '../../components/ui/EtatVide'
 import Badge from '../../components/ui/Badge'
 import Modal from '../../components/ui/Modal'
 import Alerte from '../../components/ui/Alerte'
+import ImageProduit from '../../components/ui/ImageProduit'
 import { formaterFCFA } from '../../utils/format'
 
 const VIDE = { categorie_id: '', nom: '', description: '', prix_achat: '', prix_vente: '', quantite_stock: '', seuil_alerte: 5, actif: true }
@@ -135,13 +136,7 @@ export default function Produits() {
           <ul className="divide-y divide-gray-100">
             {produits.map((p) => (
               <li key={p.id} className="flex items-center gap-3 p-4">
-                <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-gray-100">
-                  {p.image_url ? (
-                    <img src={urlFichier(p.image_url)} alt={p.nom} className="h-full w-full object-cover" />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center text-xl text-gray-300">🖼️</div>
-                  )}
-                </div>
+                <ImageProduit chemin={p.image_url} alt={p.nom} className="h-14 w-14 shrink-0 rounded-xl" tailleRepli="text-xl" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <p className="truncate font-semibold text-gray-800">{p.nom}</p>

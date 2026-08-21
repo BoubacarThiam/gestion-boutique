@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { usePanier } from '../../context/PanierContext'
-import { urlFichier } from '../../api/client'
 import { formaterFCFA } from '../../utils/format'
 import EtatVide from '../../components/ui/EtatVide'
+import ImageProduit from '../../components/ui/ImageProduit'
 
 /** Panier : liste des articles, modification des quantités, passage à la commande. */
 export default function Panier() {
@@ -26,13 +26,7 @@ export default function Panier() {
       <div className="flex flex-col gap-3">
         {articles.map((a) => (
           <div key={a.produit_id} className="carte flex items-center gap-3 p-3">
-            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-gray-100">
-              {a.image_url ? (
-                <img src={urlFichier(a.image_url)} alt={a.nom} className="h-full w-full object-cover" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center text-2xl text-gray-300">🖼️</div>
-              )}
-            </div>
+            <ImageProduit chemin={a.image_url} alt={a.nom} className="h-16 w-16 shrink-0 rounded-xl" tailleRepli="text-2xl" />
 
             <div className="min-w-0 flex-1">
               <p className="truncate font-semibold text-gray-800">{a.nom}</p>

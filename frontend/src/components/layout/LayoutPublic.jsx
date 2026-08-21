@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { catalogueApi } from '../../api/public'
 import { usePanier } from '../../context/PanierContext'
+import PageTransition from '../ui/PageTransition'
 
 /** Mise en page du site public (catalogue, panier, commande). */
 export default function LayoutPublic() {
@@ -29,7 +30,12 @@ export default function LayoutPublic() {
           >
             🛒 <span className="hidden sm:inline">Panier</span>
             {nombreArticles > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-or-600 text-xs font-bold text-white">
+              // `key` sur le compte : remonte le badge à chaque changement pour
+              // rejouer l'animation "pop" (accusé de réception visuel).
+              <span
+                key={nombreArticles}
+                className="absolute -right-2 -top-2 flex h-6 w-6 animate-pop items-center justify-center rounded-full bg-or-600 text-xs font-bold text-white"
+              >
                 {nombreArticles}
               </span>
             )}
@@ -38,7 +44,7 @@ export default function LayoutPublic() {
       </header>
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:px-6">
-        <Outlet />
+        <PageTransition />
       </main>
 
       <footer className="border-t border-gray-200 bg-white px-4 py-6 text-center text-sm text-gray-500">

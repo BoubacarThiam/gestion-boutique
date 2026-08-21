@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { dashboardApi } from '../../api/dashboard'
 import logo from '../../assets/logo-tdmgbc.jpg'
+import PageTransition from '../ui/PageTransition'
 
 const LIENS = [
   { to: '/gestion', label: 'Tableau de bord', icone: '📊', fin: true },
@@ -78,7 +79,11 @@ export default function LayoutAdmin() {
       {/* Barre latérale desktop */}
       <aside className="hidden w-64 flex-col border-r border-gray-200 bg-white sm:flex">
         <div className="flex items-center gap-3 border-b border-marque-100 px-5 py-4">
-          <img src={logo} alt="TDMGBC" className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-marque-100" />
+          <img
+            src={logo}
+            alt="TDMGBC"
+            className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-marque-100 transition duration-300 ease-out hover:rotate-3 hover:scale-105"
+          />
           <div className="min-w-0">
             <p className="font-display font-bold tracking-tight text-marque-700">Espace gestion</p>
             <p className="truncate text-sm text-gray-500">{utilisateur?.nom}</p>
@@ -95,11 +100,11 @@ export default function LayoutAdmin() {
       {/* Menu coulissant mobile */}
       {menuOuvert && (
         <div className="fixed inset-0 z-40 sm:hidden">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setMenuOuvert(false)} />
-          <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-white shadow-elevee">
+          <div className="absolute inset-0 animate-voile bg-black/40" onClick={() => setMenuOuvert(false)} />
+          <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] animate-tiroir flex-col bg-white shadow-elevee">
             <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
               <div className="flex items-center gap-3 min-w-0">
-                <img src={logo} alt="TDMGBC" className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-marque-100" />
+                <img src={logo} alt="TDMGBC" className="h-9 w-9 shrink-0 animate-pop rounded-full object-cover ring-2 ring-marque-100" />
                 <div className="min-w-0">
                   <p className="font-display font-bold tracking-tight text-marque-700">Espace gestion</p>
                   <p className="truncate text-sm text-gray-500">{utilisateur?.nom}</p>
@@ -131,7 +136,7 @@ export default function LayoutAdmin() {
         </header>
 
         <main className="flex-1 p-4 sm:p-6">
-          <Outlet />
+          <PageTransition />
         </main>
       </div>
     </div>

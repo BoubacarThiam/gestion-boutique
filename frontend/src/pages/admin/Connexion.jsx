@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useAuth } from '../../context/AuthContext'
 import { ErreurApi } from '../../api/client'
 import Alerte from '../../components/ui/Alerte'
@@ -16,6 +17,7 @@ export default function Connexion() {
   const [motDePasse, setMotDePasse] = useState('')
   const [erreur, setErreur] = useState('')
   const [envoiEnCours, setEnvoiEnCours] = useState(false)
+  const motionReduit = useReducedMotion()
 
   if (!chargement && estConnecte) {
     return <Navigate to={state?.depuis?.pathname || '/gestion'} replace />
@@ -36,16 +38,30 @@ export default function Connexion() {
   }
 
   return (
-    <div
-      className="flex min-h-screen items-center justify-center bg-marque-950 bg-cover bg-center px-4"
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(25,4,3,0.45), rgba(25,4,3,0.80)), url(${fondConnexion})`,
-      }}
-    >
-      <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/95 p-6 shadow-elevee backdrop-blur-sm sm:p-8">
-        <img
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-marque-950 px-4">
+      {/* Fond plein écran : léger zoom/pan continu (Ken Burns) — isolé dans
+          sa propre couche pour que l'agrandissement ne déborde jamais du
+          cadre (voir `overflow-hidden` ci-dessus) ni ne fasse bouger la carte. */}
+      <div
+        className="absolute inset-0 animate-kenburns bg-cover bg-center"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(25,4,3,0.45), rgba(25,4,3,0.80)), url(${fondConnexion})`,
+        }}
+        aria-hidden="true"
+      />
+
+      <motion.div
+        initial={{ opacity: 0, y: motionReduit ? 0 : 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: motionReduit ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="relative w-full max-w-sm rounded-3xl border border-white/10 bg-white/95 p-6 shadow-elevee backdrop-blur-sm sm:p-8"
+      >
+        <motion.img
           src={logo}
           alt="TDMGBC"
+          initial={{ opacity: 0, scale: 0.7, rotate: motionReduit ? 0 : -8 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: motionReduit ? 0 : 0.5, delay: motionReduit ? 0 : 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto mb-4 h-20 w-20 rounded-full object-cover shadow-soft ring-4 ring-or-100"
         />
         <h1 className="text-center text-2xl font-display font-bold tracking-tight text-gray-900">Espace gestion</h1>
@@ -84,7 +100,7 @@ export default function Connexion() {
             {envoiEnCours ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   )
 }
