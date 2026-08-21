@@ -1,0 +1,10 @@
+# =====================================================================
+# Fallback SPA : toute route qui ne correspond pas à un fichier réel
+# (ex: /gestion/produits rechargé directement) doit servir index.html,
+# pour laisser React Router gérer la navigation côté client.
+# À utiliser si le frontend (dossier dist/) est déployé sur Apache.
+# =====================================================================
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

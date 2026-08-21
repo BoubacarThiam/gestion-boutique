@@ -1,0 +1,13 @@
+# Empêche l'exécution de scripts PHP dans le dossier des images uploadées
+# (sécurité : un fichier malicieux uploadé ne doit jamais pouvoir s'exécuter)
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(php|phtml|php\d|phar)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(php|phtml|php\d|phar)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

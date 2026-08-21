@@ -1,0 +1,21 @@
+# =====================================================================
+# Toutes les requêtes API passent par index.php (front controller),
+# sauf les fichiers/dossiers qui existent réellement (ex: /uploads/...).
+# =====================================================================
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Cache le contenu du dossier config/ et src/ si jamais accédé directement
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(env|sql|log)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(env|sql|log)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

@@ -1,0 +1,23 @@
+# --- Secrets / config locale ------------------------------------------
+backend/.env
+frontend/.env
+frontend/.env.production
+frontend/.env.local
+
+# --- Backend (PHP) -----------------------------------------------------
+backend/vendor/
+backend/uploads/produits/*
+!backend/uploads/produits/.gitkeep
+
+# --- Frontend (Node / Vite) ---------------------------------------------
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# --- Éditeurs / OS -------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.log

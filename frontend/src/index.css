@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Empêche le zoom automatique iOS sur les champs de formulaire */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+
+  /* Cible tactile confortable par défaut, cohérent avec "gros boutons,
+     utilisateur non technicien sur téléphone". */
+  button, a, input, select, textarea {
+    @apply text-base;
+  }
+}
+
+@layer components {
+  /* Boutons génériques réutilisés partout dans l'app */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold
+           transition active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primaire {
+    @apply btn bg-marque-600 text-white hover:bg-marque-700 shadow-sm;
+  }
+  .btn-secondaire {
+    @apply btn bg-white text-marque-700 border-2 border-marque-600 hover:bg-marque-50;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+  .btn-discret {
+    @apply btn bg-gray-100 text-gray-700 hover:bg-gray-200;
+  }
+
+  .champ {
+    @apply w-full rounded-xl border border-gray-300 px-4 py-3 text-base
+           focus:border-marque-500 focus:outline-none focus:ring-2 focus:ring-marque-200;
+  }
+
+  .carte {
+    @apply rounded-2xl border border-gray-200 bg-white shadow-sm;
+  }
+
+  .etiquette {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
+  }
+}
