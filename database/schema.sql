@@ -222,7 +222,22 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (7, 3, 'Coque silicone iPhone',             'Coque antichoc, plusieurs coloris',             800,  2000, 34, 10, NULL, 1),
     (8, 3, 'Chargeur rapide type-C 20W',        'Chargeur secteur + câble',                     2000,  4500, 25, 8, NULL, 1),
     (9, 3, 'Écouteurs Bluetooth',               'Sans fil, autonomie 6h',                       4000,  9000,  5, 5, NULL, 1),
-    (10, 3, 'Câble USB renforcé 1m',            'Câble tressé, charge + données',                800,  2000, 30, 10, NULL, 1);
+    (10, 3, 'Câble USB renforcé 1m',            'Câble tressé, charge + données',                800,  2000, 30, 10, NULL, 1),
+    -- Arrivage lunettes (photos vitrine réelles, 21/08/2026) — pièces uniques,
+    -- stock volontairement faible (3 par modèle).
+    (11, 1, 'Lunette de soleil ronde noire',          'Monture ronde brillante, verres dégradés gris',    4000, 8000, 3, 1, '/uploads/produits/produit_lunette01.jpeg', 1),
+    (12, 1, 'Lunette de soleil carrée noire',         'Monture épaisse, verres fumés',                    4000, 8000, 3, 1, '/uploads/produits/produit_lunette02.jpeg', 1),
+    (13, 1, 'Lunette de soleil carrée écaille',       'Style rétro, verres marron',                       4000, 8000, 3, 1, '/uploads/produits/produit_lunette03.jpeg', 1),
+    (14, 1, 'Lunette de soleil ronde noire brillante','Monture ronde, verres fumés foncés',                4000, 8000, 3, 1, '/uploads/produits/produit_lunette04.jpeg', 1),
+    (15, 1, 'Lunette de soleil papillon bleu marine', 'Monture papillon, branches métal fines',           4000, 8000, 3, 1, '/uploads/produits/produit_lunette05.jpeg', 1),
+    (16, 1, 'Lunette de soleil carrée écaille marron','Monture épaisse vernie',                           4000, 8000, 3, 1, '/uploads/produits/produit_lunette06.jpeg', 1),
+    (17, 1, 'Lunette de soleil hexagonale grise',     'Monture translucide, détails dorés',               4000, 8000, 3, 1, '/uploads/produits/produit_lunette07.jpeg', 1),
+    (18, 1, 'Lunette de soleil carrée rivets dorés',  'Monture noire épaisse, finitions dorées',          4000, 8000, 3, 1, '/uploads/produits/produit_lunette08.jpeg', 1),
+    (19, 1, 'Lunette de soleil hexagonale dorée',     'Monture métal fine, verres fumés',                 4000, 8000, 3, 1, '/uploads/produits/produit_lunette09.jpeg', 1),
+    (20, 1, 'Lunette de soleil carrée écaille noire', 'Monture noire, branches écaille contrastées',      4000, 8000, 3, 1, '/uploads/produits/produit_lunette10.jpeg', 1),
+    (21, 1, 'Lunette de soleil ronde vintage',        'Monture écaille arrondie, style rétro',            4000, 8000, 3, 1, '/uploads/produits/produit_lunette11.jpeg', 1),
+    (22, 1, 'Lunette de soleil aviateur carrée',      'Monture métal noire, détail corne',                4000, 8000, 3, 1, '/uploads/produits/produit_lunette12.jpeg', 1),
+    (23, 1, 'Lunette de soleil ronde transparente',   'Monture claire, verres bicolores',                 4000, 8000, 3, 1, '/uploads/produits/produit_lunette13.jpeg', 1);
 
 -- ---------------------------------------------------------------------
 -- Mouvements de stock (entrées initiales correspondant au stock ci-dessus)
@@ -240,7 +255,20 @@ INSERT INTO mouvements_stock (produit_id, type, quantite, motif, utilisateur_id)
     (9,  'entree', 5,  'Stock initial', 1),
     (10, 'entree', 30, 'Stock initial', 1),
     (1,  'sortie', 1,  'Livraison commande CMD-20260819-0001', 2),
-    (7,  'sortie', 6,  'Livraison commande CMD-20260819-0001', 2);
+    (7,  'sortie', 6,  'Livraison commande CMD-20260819-0001', 2),
+    (11, 'entree', 3,  'Stock initial', 1),
+    (12, 'entree', 3,  'Stock initial', 1),
+    (13, 'entree', 3,  'Stock initial', 1),
+    (14, 'entree', 3,  'Stock initial', 1),
+    (15, 'entree', 3,  'Stock initial', 1),
+    (16, 'entree', 3,  'Stock initial', 1),
+    (17, 'entree', 3,  'Stock initial', 1),
+    (18, 'entree', 3,  'Stock initial', 1),
+    (19, 'entree', 3,  'Stock initial', 1),
+    (20, 'entree', 3,  'Stock initial', 1),
+    (21, 'entree', 3,  'Stock initial', 1),
+    (22, 'entree', 3,  'Stock initial', 1),
+    (23, 'entree', 3,  'Stock initial', 1);
 
 -- ---------------------------------------------------------------------
 -- Clients
