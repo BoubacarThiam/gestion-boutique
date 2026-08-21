@@ -216,9 +216,11 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (1, 1, 'Lunettes de soleil Aviator',        'Monture métal, verres polarisés',              4000,  8500, 19, 5, NULL, 1),
     (2, 1, 'Lunettes de soleil Wayfarer',       'Monture plastique, style classique',           3500,  7500, 15, 5, NULL, 1),
     (3, 1, 'Lunettes de vue anti-lumière bleue','Protection écrans, monture légère',            3000,  6500,  8, 5, NULL, 1),
-    (4, 2, 'Montre homme cuir noir',            'Bracelet cuir, quartz, résistante à l''eau',   6000, 12000, 10, 3, NULL, 1),
-    (5, 2, 'Montre femme dorée',                'Bracelet acier doré, cadran strass',           5500, 11000,  7, 3, NULL, 1),
-    (6, 2, 'Montre sport digitale',             'Étanche, chronomètre, rétroéclairage',         4500,  9500,  2, 3, NULL, 1),
+    -- Remplacées par le vrai arrivage montres (photos réelles, 21/08/2026) —
+    -- id conservés (4/5/6) car référencés par la commande de démo #2 plus bas.
+    (4, 2, 'Montre squelette dorée cuir marron',  'Cadran effet squelette blanc/or, bracelet cuir marron',   7500, 15000, 3, 1, '/uploads/produits/produit_montre01.jpeg', 1),
+    (5, 2, 'Montre squelette or cuir marron',     'Cadran effet squelette doré, bracelet cuir marron',       7500, 15000, 3, 1, '/uploads/produits/produit_montre02.jpeg', 1),
+    (6, 2, 'Montre squelette bleue acier',        'Cadran effet squelette bleu, bracelet acier argenté',     7500, 15000, 3, 1, '/uploads/produits/produit_montre03.jpeg', 1),
     (7, 3, 'Coque silicone iPhone',             'Coque antichoc, plusieurs coloris',             800,  2000, 34, 10, NULL, 1),
     (8, 3, 'Chargeur rapide type-C 20W',        'Chargeur secteur + câble',                     2000,  4500, 25, 8, NULL, 1),
     (9, 3, 'Écouteurs Bluetooth',               'Sans fil, autonomie 6h',                       4000,  9000,  5, 5, NULL, 1),
@@ -237,7 +239,12 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (20, 1, 'Lunette de soleil carrée écaille noire', 'Monture noire, branches écaille contrastées',      4000, 8000, 3, 1, '/uploads/produits/produit_lunette10.jpeg', 1),
     (21, 1, 'Lunette de soleil ronde vintage',        'Monture écaille arrondie, style rétro',            4000, 8000, 3, 1, '/uploads/produits/produit_lunette11.jpeg', 1),
     (22, 1, 'Lunette de soleil aviateur carrée',      'Monture métal noire, détail corne',                4000, 8000, 3, 1, '/uploads/produits/produit_lunette12.jpeg', 1),
-    (23, 1, 'Lunette de soleil ronde transparente',   'Monture claire, verres bicolores',                 4000, 8000, 3, 1, '/uploads/produits/produit_lunette13.jpeg', 1);
+    (23, 1, 'Lunette de soleil ronde transparente',   'Monture claire, verres bicolores',                 4000, 8000, 3, 1, '/uploads/produits/produit_lunette13.jpeg', 1),
+    -- Arrivage montres (photos vitrine réelles, 21/08/2026, suite — 3 des 6
+    -- photos ont remplacé les montres de démo 4/5/6 ci-dessus).
+    (24, 2, 'Montre squelette verte acier doré',      'Cadran effet squelette vert, bracelet acier bicolore',      7500, 15000, 3, 1, '/uploads/produits/produit_montre04.jpeg', 1),
+    (25, 2, 'Montre squelette blanche acier doré',    'Cadran effet squelette blanc/or, bracelet acier bicolore',  7500, 15000, 3, 1, '/uploads/produits/produit_montre05.jpeg', 1),
+    (26, 2, 'Montre squelette blanche acier argenté', 'Cadran effet squelette blanc, bracelet acier argenté',      7500, 15000, 3, 1, '/uploads/produits/produit_montre06.jpeg', 1);
 
 -- ---------------------------------------------------------------------
 -- Mouvements de stock (entrées initiales correspondant au stock ci-dessus)
@@ -246,9 +253,9 @@ INSERT INTO mouvements_stock (produit_id, type, quantite, motif, utilisateur_id)
     (1,  'entree', 20, 'Stock initial', 1),
     (2,  'entree', 15, 'Stock initial', 1),
     (3,  'entree', 8,  'Stock initial', 1),
-    (4,  'entree', 10, 'Stock initial', 1),
-    (5,  'entree', 7,  'Stock initial', 1),
-    (6,  'entree', 5,  'Stock initial', 1),
+    (4,  'entree', 3,  'Stock initial', 1),
+    (5,  'entree', 3,  'Stock initial', 1),
+    (6,  'entree', 6,  'Stock initial', 1),
     (6,  'sortie', 3,  'Vente comptoir',  2),
     (7,  'entree', 40, 'Stock initial', 1),
     (8,  'entree', 25, 'Stock initial', 1),
@@ -268,7 +275,10 @@ INSERT INTO mouvements_stock (produit_id, type, quantite, motif, utilisateur_id)
     (20, 'entree', 3,  'Stock initial', 1),
     (21, 'entree', 3,  'Stock initial', 1),
     (22, 'entree', 3,  'Stock initial', 1),
-    (23, 'entree', 3,  'Stock initial', 1);
+    (23, 'entree', 3,  'Stock initial', 1),
+    (24, 'entree', 3,  'Stock initial', 1),
+    (25, 'entree', 3,  'Stock initial', 1),
+    (26, 'entree', 3,  'Stock initial', 1);
 
 -- ---------------------------------------------------------------------
 -- Clients
@@ -287,7 +297,7 @@ INSERT INTO commandes (id, numero_commande, client_id, statut, total, adresse_li
 INSERT INTO lignes_commande (commande_id, produit_id, quantite, prix_unitaire) VALUES
     (1, 1, 1, 8500),   -- Lunettes Aviator            (1 * 8500  = 8500)
     (1, 7, 6, 2000),   -- Coques silicone iPhone      (6 * 2000  = 12000) -> total commande 1 = 20500
-    (2, 4, 1, 12000),  -- Montre homme cuir noir      (1 * 12000 = 12000)
+    (2, 4, 1, 12000),  -- Montre squelette dorée cuir marron (prix historique de la commande, avant le changement de tarif du produit)
     (2, 10, 2, 2000);  -- Câbles USB renforcés        (2 * 2000  = 4000)  -> total commande 2 = 16000
 
 -- Remarque : la commande #1 est déjà 'livree' dans ce seed, avec ses
