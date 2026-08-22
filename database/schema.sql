@@ -254,7 +254,16 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (32, 1, 'Lunette de soleil carrée noire épaisse',    'Monture épaisse, verres fumés',                       6000, 12000, 3, 1, '/uploads/produits/produit_lunette19.jpeg', 1),
     (33, 1, 'Lunette de soleil papillon grise bleutée',  'Monture métal grise, verres teintés bleu',            6000, 12000, 3, 1, '/uploads/produits/produit_lunette20.jpeg', 1),
     (34, 1, 'Lunette de soleil hexagonale transparente', 'Monture claire, verres teintés bleu',                 6000, 12000, 3, 1, '/uploads/produits/produit_lunette21.jpeg', 1),
-    (35, 1, 'Lunette de vue ronde grise',                'Monture translucide grise, verres clairs',            6000, 12000, 3, 1, '/uploads/produits/produit_lunette22.jpeg', 1);
+    (35, 1, 'Lunette de vue ronde grise',                'Monture translucide grise, verres clairs',            6000, 12000, 3, 1, '/uploads/produits/produit_lunette22.jpeg', 1),
+    -- Arrivage lunettes #3 : gamme "original" sans monture (photos vitrine
+    -- réelles, 22/08/2026), verres polycarbonate, tarif plus premium.
+    (36, 1, 'Lunette sans monture grise branches dorées',   'Sans cerclage, verres polycarbonate fumés, branches dorées',       17000, 35000, 3, 1, '/uploads/produits/produit_lunette23.jpeg', 1),
+    (37, 1, 'Lunette sans monture dégradée branches bois',  'Sans cerclage, verres polycarbonate dégradés, branches bois',      17000, 35000, 3, 1, '/uploads/produits/produit_lunette24.jpeg', 1),
+    (38, 1, 'Lunette sans monture claire pont doré',        'Sans cerclage, verres polycarbonate clairs, pont doré',            17000, 35000, 3, 1, '/uploads/produits/produit_lunette25.jpeg', 1),
+    (39, 1, 'Lunette sans monture fumée branches noires',   'Sans cerclage, verres polycarbonate fumés, branches noires',       17000, 35000, 3, 1, '/uploads/produits/produit_lunette26.jpeg', 1),
+    (40, 1, 'Lunette sans monture carrée strass dorés',     'Sans cerclage, verres polycarbonate carrés, charnières strass',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette27.jpeg', 1),
+    (41, 1, 'Lunette sans monture rectangulaire argentée',  'Sans cerclage, verres polycarbonate, charnières argentées',        17000, 35000, 3, 1, '/uploads/produits/produit_lunette28.jpeg', 1),
+    (42, 1, 'Lunette sans monture grise charnières ornées', 'Sans cerclage, verres polycarbonate, charnières dorées ornées',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette29.jpeg', 1);
 
 -- ---------------------------------------------------------------------
 -- Mouvements de stock (entrées initiales correspondant au stock ci-dessus)
@@ -297,7 +306,14 @@ INSERT INTO mouvements_stock (produit_id, type, quantite, motif, utilisateur_id)
     (32, 'entree', 3,  'Stock initial', 1),
     (33, 'entree', 3,  'Stock initial', 1),
     (34, 'entree', 3,  'Stock initial', 1),
-    (35, 'entree', 3,  'Stock initial', 1);
+    (35, 'entree', 3,  'Stock initial', 1),
+    (36, 'entree', 3,  'Stock initial', 1),
+    (37, 'entree', 3,  'Stock initial', 1),
+    (38, 'entree', 3,  'Stock initial', 1),
+    (39, 'entree', 3,  'Stock initial', 1),
+    (40, 'entree', 3,  'Stock initial', 1),
+    (41, 'entree', 3,  'Stock initial', 1),
+    (42, 'entree', 3,  'Stock initial', 1);
 
 -- ---------------------------------------------------------------------
 -- Clients
