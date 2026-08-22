@@ -218,9 +218,9 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (3, 1, 'Lunettes de vue anti-lumière bleue','Protection écrans, monture légère',            3000,  6500,  8, 5, NULL, 1),
     -- Remplacées par le vrai arrivage montres (photos réelles, 21/08/2026) —
     -- id conservés (4/5/6) car référencés par la commande de démo #2 plus bas.
-    (4, 2, 'Montre squelette dorée cuir marron',  'Cadran effet squelette blanc/or, bracelet cuir marron',   7500, 15000, 3, 1, '/uploads/produits/produit_montre01.jpeg', 1),
-    (5, 2, 'Montre squelette or cuir marron',     'Cadran effet squelette doré, bracelet cuir marron',       7500, 15000, 3, 1, '/uploads/produits/produit_montre02.jpeg', 1),
-    (6, 2, 'Montre squelette bleue acier',        'Cadran effet squelette bleu, bracelet acier argenté',     7500, 15000, 3, 1, '/uploads/produits/produit_montre03.jpeg', 1),
+    (4, 2, 'Montre squelette dorée cuir marron',  'Cadran effet squelette blanc/or, bracelet cuir marron',   7500, 25000, 3, 1, '/uploads/produits/produit_montre01.jpeg', 1),
+    (5, 2, 'Montre squelette or cuir marron',     'Cadran effet squelette doré, bracelet cuir marron',       7500, 20000, 3, 1, '/uploads/produits/produit_montre02.jpeg', 1),
+    (6, 2, 'Montre squelette bleue acier',        'Cadran effet squelette bleu, bracelet acier argenté',     7500, 25000, 3, 1, '/uploads/produits/produit_montre03.jpeg', 1),
     (7, 3, 'Coque silicone iPhone',             'Coque antichoc, plusieurs coloris',             800,  2000, 34, 10, NULL, 1),
     (8, 3, 'Chargeur rapide type-C 20W',        'Chargeur secteur + câble',                     2000,  4500, 25, 8, NULL, 1),
     (9, 3, 'Écouteurs Bluetooth',               'Sans fil, autonomie 6h',                       4000,  9000,  5, 5, NULL, 1),
@@ -242,9 +242,9 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (23, 1, 'Lunette de soleil ronde transparente',   'Monture claire, verres bicolores',                 4000, 8000, 3, 1, '/uploads/produits/produit_lunette13.jpeg', 1),
     -- Arrivage montres (photos vitrine réelles, 21/08/2026, suite — 3 des 6
     -- photos ont remplacé les montres de démo 4/5/6 ci-dessus).
-    (24, 2, 'Montre squelette verte acier doré',      'Cadran effet squelette vert, bracelet acier bicolore',      7500, 15000, 3, 1, '/uploads/produits/produit_montre04.jpeg', 1),
-    (25, 2, 'Montre squelette blanche acier doré',    'Cadran effet squelette blanc/or, bracelet acier bicolore',  7500, 15000, 3, 1, '/uploads/produits/produit_montre05.jpeg', 1),
-    (26, 2, 'Montre squelette blanche acier argenté', 'Cadran effet squelette blanc, bracelet acier argenté',      7500, 15000, 3, 1, '/uploads/produits/produit_montre06.jpeg', 1),
+    (24, 2, 'Montre squelette verte acier doré',      'Cadran effet squelette vert, bracelet acier bicolore',      7500, 25000, 3, 1, '/uploads/produits/produit_montre04.jpeg', 1),
+    (25, 2, 'Montre squelette blanche acier doré',    'Cadran effet squelette blanc/or, bracelet acier bicolore',  7500, 25000, 3, 1, '/uploads/produits/produit_montre05.jpeg', 1),
+    (26, 2, 'Montre squelette blanche acier argenté', 'Cadran effet squelette blanc, bracelet acier argenté',      7500, 25000, 3, 1, '/uploads/produits/produit_montre06.jpeg', 1),
     -- Arrivage lunettes #2 (photos vitrine réelles, 22/08/2026).
     (27, 1, 'Lunette de soleil ronde écaille marron',    'Monture ronde noire, branches écaille marron',        6000, 12000, 3, 1, '/uploads/produits/produit_lunette14.jpeg', 1),
     (28, 1, 'Lunette de soleil rectangulaire ambrée',    'Monture transparente, branches ambrées',              6000, 12000, 3, 1, '/uploads/produits/produit_lunette15.jpeg', 1),
@@ -270,15 +270,15 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     -- volontairement exclues : le collage marketing "Hardlex dial..." (texte
     -- publicitaire visible dessus, pas une photo produit) et la version
     -- "gold skeleton cuir marron" quasi identique au produit 5 déjà en base.
-    (43, 2, 'Montre bleue bracelet cuir',              'Cadran bleu, bracelet cuir bleu',                     6000, 12000, 3, 1, '/uploads/produits/produit_salcir_01_1787317483a.jpeg', 1),
-    (44, 2, 'Montre chronographe bleue',               'Cadran bleu à compteurs, bracelet silicone',          6000, 12000, 3, 1, '/uploads/produits/produit_salcir_02_1787317483b.jpeg', 1),
-    (45, 2, 'Montre plongée verte',                    'Cadran vert, bracelet nato vert',                     6000, 12000, 3, 1, '/uploads/produits/produit_salcir_03_1787317483c.jpeg', 1),
-    (46, 2, 'Montre classique argent et or',            'Cadran bicolore, bracelet cuir marron',               6000, 12000, 3, 1, '/uploads/produits/produit_salcir_04_1787317483d.jpeg', 1),
-    (47, 2, 'Montre classique bleu marine',             'Cadran bleu marine, bracelet cuir noir',              6000, 12000, 3, 1, '/uploads/produits/produit_salcir_05_1787317483e.jpeg', 1),
-    (48, 2, 'Montre dorée cadran arabe',                'Cadran doré chiffres arabes, bracelet acier doré',    6000, 12000, 3, 1, '/uploads/produits/produit_salcir_06_1787317483f.jpeg', 1),
-    (49, 2, 'Montre argentée cadran arabe',             'Cadran argenté chiffres arabes, bracelet acier',      6000, 12000, 3, 1, '/uploads/produits/produit_salcir_07_1787317483g.jpeg', 1),
-    (50, 2, 'Montre bicolore cadran arabe',             'Cadran noir chiffres arabes, bracelet acier bicolore',6000, 12000, 3, 1, '/uploads/produits/produit_salcir_08_1787317483h.jpeg', 1),
-    (51, 2, 'Montre verte cadran nervuré',              'Cadran vert nervuré, bracelet acier',                 6000, 12000, 3, 1, '/uploads/produits/produit_salcir_10_1787317483j.jpeg', 1);
+    (43, 2, 'Montre bleue bracelet cuir',              'Cadran bleu, bracelet cuir bleu',                     6000, 25000, 3, 1, '/uploads/produits/produit_salcir_01_1787317483a.jpeg', 1),
+    (44, 2, 'Montre chronographe bleue',               'Cadran bleu à compteurs, bracelet silicone',          6000, 25000, 3, 1, '/uploads/produits/produit_salcir_02_1787317483b.jpeg', 1),
+    (45, 2, 'Montre plongée verte',                    'Cadran vert, bracelet nato vert',                     6000, 25000, 3, 1, '/uploads/produits/produit_salcir_03_1787317483c.jpeg', 1),
+    (46, 2, 'Montre classique argent et or',            'Cadran bicolore, bracelet cuir marron',               6000, 20000, 3, 1, '/uploads/produits/produit_salcir_04_1787317483d.jpeg', 1),
+    (47, 2, 'Montre classique bleu marine',             'Cadran bleu marine, bracelet cuir noir',              6000, 25000, 3, 1, '/uploads/produits/produit_salcir_05_1787317483e.jpeg', 1),
+    (48, 2, 'Montre dorée cadran arabe',                'Cadran doré chiffres arabes, bracelet acier doré',    6000, 25000, 3, 1, '/uploads/produits/produit_salcir_06_1787317483f.jpeg', 1),
+    (49, 2, 'Montre argentée cadran arabe',             'Cadran argenté chiffres arabes, bracelet acier',      6000, 25000, 3, 1, '/uploads/produits/produit_salcir_07_1787317483g.jpeg', 1),
+    (50, 2, 'Montre bicolore cadran arabe',             'Cadran noir chiffres arabes, bracelet acier bicolore',6000, 25000, 3, 1, '/uploads/produits/produit_salcir_08_1787317483h.jpeg', 1),
+    (51, 2, 'Montre verte cadran nervuré',              'Cadran vert nervuré, bracelet acier',                 6000, 25000, 3, 1, '/uploads/produits/produit_salcir_10_1787317483j.jpeg', 1);
 
 -- ---------------------------------------------------------------------
 -- Mouvements de stock (entrées initiales correspondant au stock ci-dessus)
