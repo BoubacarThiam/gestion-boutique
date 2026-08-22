@@ -47,7 +47,7 @@ class CategorieController
             'actif'       => isset($donnees['actif']) ? (int) (bool) $donnees['actif'] : 1,
         ]);
 
-        Response::json(['id' => (int) $pdo->lastInsertId()], 201);
+        Response::json(['id' => (int) $pdo->lastInsertId('categories_id_seq')], 201);
     }
 
     public function modifier(Request $request): void

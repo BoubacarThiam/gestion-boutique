@@ -6,8 +6,9 @@ use PDO;
 use PDOException;
 
 /**
- * Connexion PDO unique (singleton) à MySQL/MariaDB.
- * Toutes les requêtes de l'application passent par des requêtes préparées.
+ * Connexion PDO unique (singleton) à MySQL/MariaDB ou PostgreSQL (Supabase),
+ * selon DB_DRIVER dans .env. Toutes les requêtes de l'application passent
+ * par des requêtes préparées.
  */
 class Database
 {
@@ -19,13 +20,22 @@ class Database
             return self::$instance;
         }
 
-        $dsn = \sprintf(
-            'mysql:host=%s;port=%s;dbname=%s;charset=%s',
-            config('db.host'),
-            config('db.port'),
-            config('db.nom'),
-            config('db.charset')
-        );
+        $pilote = config('db.driver', 'mysql');
+
+        $dsn = $pilote === 'pgsql'
+            ? \sprintf(
+                'pgsql:host=%s;port=%s;dbname=%s',
+                config('db.host'),
+                config('db.port'),
+                config('db.nom')
+            )
+            : \sprintf(
+                'mysql:host=%s;port=%s;dbname=%s;charset=%s',
+                config('db.host'),
+                config('db.port'),
+                config('db.nom'),
+                config('db.charset')
+            );
 
         try {
             self::$instance = new PDO($dsn, config('db.user'), config('db.pass'), [

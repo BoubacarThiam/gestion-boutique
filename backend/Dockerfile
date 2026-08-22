@@ -3,9 +3,16 @@
 # pour l'hébergement mutualisé dans le README.
 FROM php:8.2-apache
 
-RUN docker-php-ext-install pdo_mysql \
+# pdo_mysql (hébergement mutualisé / Railway MySQL) + pdo_pgsql (Supabase) :
+# les deux sont installées, DB_DRIVER dans .env choisit laquelle est utilisée
+# au runtime (voir backend/src/Core/Database.php) — pas besoin de rebuild
+# l'image pour changer d'hébergeur de base de données.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libpq-dev \
+    && docker-php-ext-install pdo_mysql pdo_pgsql \
     && a2enmod rewrite \
-    && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
+    && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
 COPY . /var/www/html/

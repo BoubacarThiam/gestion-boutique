@@ -89,7 +89,10 @@ class CommandeController
             } else {
                 $pdo->prepare('INSERT INTO clients (nom, telephone, adresse) VALUES (:nom, :telephone, :adresse)')
                     ->execute(['nom' => $nom, 'telephone' => $telephone, 'adresse' => $adresseLivraison]);
-                $clientId = (int) $pdo->lastInsertId();
+                // Nom de séquence en argument : ignoré par le pilote MySQL,
+                // requis par PDO_PGSQL (Postgres n'a pas d'équivalent
+                // implicite à MySQL pour "le dernier id inséré").
+                $clientId = (int) $pdo->lastInsertId('clients_id_seq');
             }
 
             $numeroCommande = $this->genererNumeroCommande($pdo);
@@ -104,7 +107,7 @@ class CommandeController
                 'adresse' => $adresseLivraison,
                 'note'    => $note,
             ]);
-            $commandeId = (int) $pdo->lastInsertId();
+            $commandeId = (int) $pdo->lastInsertId('commandes_id_seq');
 
             $insertLigne = $pdo->prepare(
                 'INSERT INTO lignes_commande (commande_id, produit_id, quantite, prix_unitaire)

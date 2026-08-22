@@ -17,6 +17,7 @@ accessoires de téléphone) : catalogue public avec commande en ligne (paiement
 - [Installation en local](#installation-en-local)
 - [Comptes de test](#comptes-de-test-seed)
 - [Déploiement en production](#déploiement-en-production-hébergement-mutualisé)
+- [Déploiement Vercel + Railway + Supabase](#déploiement-vercel--railway--supabase-gratuit)
 - [PWA & hors-ligne](#pwa--hors-ligne)
 - [Notes techniques](#notes-techniques)
 - [Roadmap v2](#roadmap-v2-non-codé)
@@ -165,48 +166,60 @@ souci CORS à gérer en local.
   `whatsapp_proprietaire` (numéro international sans "+", ex: `221771234567`)
   et `adresse_boutique`.
 
-## Déploiement (Vercel + Railway, gratuit)
+## Déploiement (Vercel + Railway + Supabase, gratuit)
 
 Alternative moderne à l'hébergement mutualisé ci-dessus : frontend sur
-**Vercel**, API + MySQL sur **Railway**. Nécessite un compte sur chacun
-(gratuits pour démarrer) — les deux se connectent directement au dépôt
-GitHub, chaque `git push` redéploie automatiquement.
+**Vercel**, API sur **Railway**, base de données sur **Supabase**
+(PostgreSQL — plus simple à initialiser que MySQL sur Railway : tout se
+fait dans l'éditeur SQL web de Supabase, sans ligne de commande). Nécessite
+un compte sur chacun des trois (gratuits pour démarrer) — les trois se
+connectent directement au dépôt GitHub, chaque `git push` redéploie
+automatiquement (sauf Supabase, qui n'a pas de code à redéployer).
 
-### 1. Railway — API + base de données
+### 1. Supabase — base de données
+
+1. Sur [supabase.com](https://supabase.com), *New Project* — notez le mot
+   de passe base de données que vous choisissez à la création (il ne sera
+   plus jamais affiché en clair ensuite).
+2. Menu de gauche **SQL Editor → New query** : ouvrez
+   `database/schema.postgres.sql` de ce dépôt, collez tout son contenu,
+   **Run**. Ce fichier contient la même structure et les mêmes données que
+   `database/schema.sql` (MySQL), juste en syntaxe PostgreSQL — voir
+   [Notes techniques](#notes-techniques).
+3. **Settings → Database → Connection string** (onglet *URI*, section
+   *Connection parameters* en dessous) : notez `Host`, `Port` (5432),
+   `Database name` (`postgres`), `User` (`postgres`) et le mot de passe
+   choisi à l'étape 1 — ce sont les 5 valeurs `DB_*` à utiliser à l'étape
+   suivante.
+
+### 2. Railway — API
 
 1. Sur [railway.app](https://railway.app), *New Project* → **Deploy from
    GitHub repo** → sélectionnez ce dépôt.
-2. *Add a service* → **Database → MySQL** (Railway crée les identifiants
-   automatiquement).
-3. Sur le service créé depuis le dépôt : **Settings → Root Directory** =
+2. Sur le service créé depuis le dépôt : **Settings → Root Directory** =
    `backend` (c'est là que se trouve le `Dockerfile`, détecté automatiquement).
-4. **Settings → Volumes** : ajoutez un volume monté sur `/var/www/html/uploads/produits`
+3. **Settings → Volumes** : ajoutez un volume monté sur `/var/www/html/uploads/produits`
    — sans ça, les photos ajoutées depuis l'admin seraient perdues à chaque
    redéploiement. Le volume est vide au premier démarrage : `docker-entrypoint.sh`
    y recopie automatiquement les photos déjà présentes dans l'image (voir
    [Notes techniques](#notes-techniques)).
-5. **Variables** du service API (`${{ }}` référence les variables du service
-   MySQL créé à l'étape 2 — Railway les propose en autocomplétion) :
+4. **Variables** du service API (valeurs `DB_*` notées à l'étape Supabase
+   1.3) :
    ```
-   DB_HOST=${{MySQL.MYSQLHOST}}
-   DB_PORT=${{MySQL.MYSQLPORT}}
-   DB_NAME=${{MySQL.MYSQLDATABASE}}
-   DB_USER=${{MySQL.MYSQLUSER}}
-   DB_PASS=${{MySQL.MYSQLPASSWORD}}
+   DB_DRIVER=pgsql
+   DB_HOST=<Host Supabase>
+   DB_PORT=5432
+   DB_NAME=postgres
+   DB_USER=postgres
+   DB_PASS=<mot de passe Supabase>
    JWT_SECRET=<généré avec php -r "echo bin2hex(random_bytes(32));">
    CORS_ALLOWED_ORIGINS=https://<votre-projet>.vercel.app
    APP_URL=https://<url-publique-railway-du-service>
    ```
-6. **Settings → Networking → Generate Domain** pour obtenir l'URL publique
+5. **Settings → Networking → Generate Domain** pour obtenir l'URL publique
    de l'API (ex: `gestion-boutique-api.up.railway.app`).
-7. Importez le schéma dans la base Railway (connectez-vous avec les
-   identifiants `MYSQL*` donnés par Railway, via `mysql` en local ou un
-   client graphique) :
-   ```bash
-   mysql -h <MYSQLHOST> -P <MYSQLPORT> -u <MYSQLUSER> -p<MYSQLPASSWORD> < database/schema.sql
-   ```
 
-### 2. Vercel — frontend
+### 3. Vercel — frontend
 
 1. Sur [vercel.com](https://vercel.com), *Add New → Project* → importez
    ce dépôt.
@@ -214,7 +227,7 @@ GitHub, chaque `git push` redéploie automatiquement.
    (Vite) ; build command et output (`dist/`) n'ont rien à changer.
 3. **Environment Variables** :
    ```
-   VITE_API_URL=https://<url-publique-railway-de-l'étape-1.6>
+   VITE_API_URL=https://<url-publique-railway-de-l'étape-2.5>
    ```
 4. *Deploy*. Redéployez (ou déclenchez un nouveau déploiement) si vous
    changez `VITE_API_URL` après coup — les variables d'env sont figées au
@@ -224,6 +237,21 @@ GitHub, chaque `git push` redéploie automatiquement.
 
 Mêmes étapes que pour l'hébergement mutualisé : changez les mots de passe
 de démo (page **Utilisateurs**) et les infos de la table `parametres`.
+
+### Ça ne marche toujours pas ?
+
+Dans l'ordre, les points de blocage les plus fréquents :
+- **Schéma pas importé** : sur Supabase, *Table Editor* doit lister
+  `produits`, `commandes`, etc. Si c'est vide, refaites l'étape 1.2.
+- **`DB_DRIVER=pgsql` oublié** sur Railway (défaut = `mysql`, la connexion
+  à Supabase échoue silencieusement sinon).
+- **`VITE_API_URL` sans le bon domaine**, ou changé sans redéployer Vercel
+  après coup (la valeur est figée au build).
+- **`CORS_ALLOWED_ORIGINS`** sur Railway qui ne correspond pas exactement
+  à l'URL Vercel (avec `https://`, sans `/` final).
+- Logs à regarder en premier en cas d'erreur : Railway → *Deployments* →
+  le déploiement → logs ; Vercel → *Deployments* → le déploiement →
+  *Build Logs* / *Function Logs*.
 
 ## PWA & hors-ligne
 
@@ -255,6 +283,16 @@ de démo (page **Utilisateurs**) et les infos de la table `parametres`.
   `npm run build` définit déjà `NODE_OPTIONS=--experimental-global-webcrypto`
   pour que ça fonctionne aussi sous Node 18 sans étape manuelle (inoffensif
   sous Node ≥ 20, qui a `crypto` nativement).
+- **MySQL et PostgreSQL supportés** (`backend/src/Core/Database.php`) : le
+  pilote PDO se choisit via `DB_DRIVER` (`mysql` par défaut, ou `pgsql` pour
+  Supabase — voir [Déploiement Vercel + Railway + Supabase](#déploiement-vercel--railway--supabase-gratuit)).
+  Les deux schémas (`database/schema.sql` et `database/schema.postgres.sql`)
+  contiennent exactement les mêmes tables et les mêmes données de test,
+  juste écrits dans la syntaxe DDL de chaque moteur (`AUTO_INCREMENT` vs
+  `SERIAL`, `ENUM` vs `CHECK`, etc.). Pas de dépendance à une lib d'ORM :
+  seuls les 5 appels à `PDO::lastInsertId()` de l'application passent le nom
+  de la séquence Postgres correspondante (ignoré par le pilote MySQL, donc
+  sans effet en local).
 
 ## Roadmap v2 (architecture prévue, non codée)
 

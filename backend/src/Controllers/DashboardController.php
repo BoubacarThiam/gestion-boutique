@@ -37,7 +37,7 @@ class DashboardController
 
         $venteDuJour = $pdo->query(
             "SELECT COUNT(*) AS nombre_commandes, COALESCE(SUM(total), 0) AS chiffre_affaires
-             FROM commandes WHERE statut = 'livree' AND DATE(created_at) = CURDATE()"
+             FROM commandes WHERE statut = 'livree' AND DATE(created_at) = CURRENT_DATE"
         )->fetch(PDO::FETCH_ASSOC);
 
         $commandesEnCours = $pdo->query(

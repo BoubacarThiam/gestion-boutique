@@ -12,6 +12,9 @@ Env::charger(__DIR__ . '/../.env');
 /** @var array<string, mixed>|null $configCache */
 $GLOBALS['__config'] = [
     'db' => [
+        // 'mysql' (par défaut, hébergement mutualisé / dev local) ou 'pgsql'
+        // (Supabase — voir database/schema.postgres.sql et le README).
+        'driver'  => Env::get('DB_DRIVER', 'mysql'),
         'host'    => Env::get('DB_HOST', 'localhost'),
         'port'    => Env::get('DB_PORT', '3306'),
         'nom'     => Env::get('DB_NAME', 'gestion_boutique'),

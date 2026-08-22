@@ -104,7 +104,7 @@ class ProduitController
             'actif'          => isset($donnees['actif']) ? (int) (bool) $donnees['actif'] : 1,
         ]);
 
-        $id = (int) $pdo->lastInsertId();
+        $id = (int) $pdo->lastInsertId('produits_id_seq');
 
         // Si un stock initial est fourni, on trace le mouvement d'entrée correspondant
         if ((int) ($donnees['quantite_stock'] ?? 0) > 0) {
