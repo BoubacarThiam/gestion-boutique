@@ -244,7 +244,17 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     -- photos ont remplacé les montres de démo 4/5/6 ci-dessus).
     (24, 2, 'Montre squelette verte acier doré',      'Cadran effet squelette vert, bracelet acier bicolore',      7500, 15000, 3, 1, '/uploads/produits/produit_montre04.jpeg', 1),
     (25, 2, 'Montre squelette blanche acier doré',    'Cadran effet squelette blanc/or, bracelet acier bicolore',  7500, 15000, 3, 1, '/uploads/produits/produit_montre05.jpeg', 1),
-    (26, 2, 'Montre squelette blanche acier argenté', 'Cadran effet squelette blanc, bracelet acier argenté',      7500, 15000, 3, 1, '/uploads/produits/produit_montre06.jpeg', 1);
+    (26, 2, 'Montre squelette blanche acier argenté', 'Cadran effet squelette blanc, bracelet acier argenté',      7500, 15000, 3, 1, '/uploads/produits/produit_montre06.jpeg', 1),
+    -- Arrivage lunettes #2 (photos vitrine réelles, 22/08/2026).
+    (27, 1, 'Lunette de soleil ronde écaille marron',    'Monture ronde noire, branches écaille marron',        6000, 12000, 3, 1, '/uploads/produits/produit_lunette14.jpeg', 1),
+    (28, 1, 'Lunette de soleil rectangulaire ambrée',    'Monture transparente, branches ambrées',              6000, 12000, 3, 1, '/uploads/produits/produit_lunette15.jpeg', 1),
+    (29, 1, 'Lunette de soleil ronde noire argentée',    'Monture ronde, charnières argentées',                 6000, 12000, 3, 1, '/uploads/produits/produit_lunette16.jpeg', 1),
+    (30, 1, 'Lunette de soleil carrée bronze métal',     'Monture métal bronze, branches fines',                6000, 12000, 3, 1, '/uploads/produits/produit_lunette17.jpeg', 1),
+    (31, 1, 'Lunette de soleil ronde grise fumée',       'Monture translucide grise, verres fumés',             6000, 12000, 3, 1, '/uploads/produits/produit_lunette18.jpeg', 1),
+    (32, 1, 'Lunette de soleil carrée noire épaisse',    'Monture épaisse, verres fumés',                       6000, 12000, 3, 1, '/uploads/produits/produit_lunette19.jpeg', 1),
+    (33, 1, 'Lunette de soleil papillon grise bleutée',  'Monture métal grise, verres teintés bleu',            6000, 12000, 3, 1, '/uploads/produits/produit_lunette20.jpeg', 1),
+    (34, 1, 'Lunette de soleil hexagonale transparente', 'Monture claire, verres teintés bleu',                 6000, 12000, 3, 1, '/uploads/produits/produit_lunette21.jpeg', 1),
+    (35, 1, 'Lunette de vue ronde grise',                'Monture translucide grise, verres clairs',            6000, 12000, 3, 1, '/uploads/produits/produit_lunette22.jpeg', 1);
 
 -- ---------------------------------------------------------------------
 -- Mouvements de stock (entrées initiales correspondant au stock ci-dessus)
@@ -278,7 +288,16 @@ INSERT INTO mouvements_stock (produit_id, type, quantite, motif, utilisateur_id)
     (23, 'entree', 3,  'Stock initial', 1),
     (24, 'entree', 3,  'Stock initial', 1),
     (25, 'entree', 3,  'Stock initial', 1),
-    (26, 'entree', 3,  'Stock initial', 1);
+    (26, 'entree', 3,  'Stock initial', 1),
+    (27, 'entree', 3,  'Stock initial', 1),
+    (28, 'entree', 3,  'Stock initial', 1),
+    (29, 'entree', 3,  'Stock initial', 1),
+    (30, 'entree', 3,  'Stock initial', 1),
+    (31, 'entree', 3,  'Stock initial', 1),
+    (32, 'entree', 3,  'Stock initial', 1),
+    (33, 'entree', 3,  'Stock initial', 1),
+    (34, 'entree', 3,  'Stock initial', 1),
+    (35, 'entree', 3,  'Stock initial', 1);
 
 -- ---------------------------------------------------------------------
 -- Clients
