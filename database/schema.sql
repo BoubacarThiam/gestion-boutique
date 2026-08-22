@@ -263,7 +263,22 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (39, 1, 'Lunette sans monture fumée branches noires',   'Sans cerclage, verres polycarbonate fumés, branches noires',       17000, 35000, 3, 1, '/uploads/produits/produit_lunette26.jpeg', 1),
     (40, 1, 'Lunette sans monture carrée strass dorés',     'Sans cerclage, verres polycarbonate carrés, charnières strass',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette27.jpeg', 1),
     (41, 1, 'Lunette sans monture rectangulaire argentée',  'Sans cerclage, verres polycarbonate, charnières argentées',        17000, 35000, 3, 1, '/uploads/produits/produit_lunette28.jpeg', 1),
-    (42, 1, 'Lunette sans monture grise charnières ornées', 'Sans cerclage, verres polycarbonate, charnières dorées ornées',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette29.jpeg', 1);
+    (42, 1, 'Lunette sans monture grise charnières ornées', 'Sans cerclage, verres polycarbonate, charnières dorées ornées',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette29.jpeg', 1),
+    -- Gamme SALCIR (photos déjà présentes dans uploads/produits — utilisées
+    -- jusqu'ici seulement pour l'animation vitrine de la catégorie Montres,
+    -- transformées ici en vraies fiches produit achetables). 2 photos du lot
+    -- volontairement exclues : le collage marketing "Hardlex dial..." (texte
+    -- publicitaire visible dessus, pas une photo produit) et la version
+    -- "gold skeleton cuir marron" quasi identique au produit 5 déjà en base.
+    (43, 2, 'Montre bleue bracelet cuir',              'Cadran bleu, bracelet cuir bleu',                     6000, 12000, 3, 1, '/uploads/produits/produit_salcir_01_1787317483a.jpeg', 1),
+    (44, 2, 'Montre chronographe bleue',               'Cadran bleu à compteurs, bracelet silicone',          6000, 12000, 3, 1, '/uploads/produits/produit_salcir_02_1787317483b.jpeg', 1),
+    (45, 2, 'Montre plongée verte',                    'Cadran vert, bracelet nato vert',                     6000, 12000, 3, 1, '/uploads/produits/produit_salcir_03_1787317483c.jpeg', 1),
+    (46, 2, 'Montre classique argent et or',            'Cadran bicolore, bracelet cuir marron',               6000, 12000, 3, 1, '/uploads/produits/produit_salcir_04_1787317483d.jpeg', 1),
+    (47, 2, 'Montre classique bleu marine',             'Cadran bleu marine, bracelet cuir noir',              6000, 12000, 3, 1, '/uploads/produits/produit_salcir_05_1787317483e.jpeg', 1),
+    (48, 2, 'Montre dorée cadran arabe',                'Cadran doré chiffres arabes, bracelet acier doré',    6000, 12000, 3, 1, '/uploads/produits/produit_salcir_06_1787317483f.jpeg', 1),
+    (49, 2, 'Montre argentée cadran arabe',             'Cadran argenté chiffres arabes, bracelet acier',      6000, 12000, 3, 1, '/uploads/produits/produit_salcir_07_1787317483g.jpeg', 1),
+    (50, 2, 'Montre bicolore cadran arabe',             'Cadran noir chiffres arabes, bracelet acier bicolore',6000, 12000, 3, 1, '/uploads/produits/produit_salcir_08_1787317483h.jpeg', 1),
+    (51, 2, 'Montre verte cadran nervuré',              'Cadran vert nervuré, bracelet acier',                 6000, 12000, 3, 1, '/uploads/produits/produit_salcir_10_1787317483j.jpeg', 1);
 
 -- ---------------------------------------------------------------------
 -- Mouvements de stock (entrées initiales correspondant au stock ci-dessus)
@@ -313,7 +328,16 @@ INSERT INTO mouvements_stock (produit_id, type, quantite, motif, utilisateur_id)
     (39, 'entree', 3,  'Stock initial', 1),
     (40, 'entree', 3,  'Stock initial', 1),
     (41, 'entree', 3,  'Stock initial', 1),
-    (42, 'entree', 3,  'Stock initial', 1);
+    (42, 'entree', 3,  'Stock initial', 1),
+    (43, 'entree', 3,  'Stock initial', 1),
+    (44, 'entree', 3,  'Stock initial', 1),
+    (45, 'entree', 3,  'Stock initial', 1),
+    (46, 'entree', 3,  'Stock initial', 1),
+    (47, 'entree', 3,  'Stock initial', 1),
+    (48, 'entree', 3,  'Stock initial', 1),
+    (49, 'entree', 3,  'Stock initial', 1),
+    (50, 'entree', 3,  'Stock initial', 1),
+    (51, 'entree', 3,  'Stock initial', 1);
 
 -- ---------------------------------------------------------------------
 -- Clients
