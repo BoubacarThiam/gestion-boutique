@@ -6,8 +6,11 @@ frontend/.env.local
 
 # --- Backend (PHP) -----------------------------------------------------
 backend/vendor/
-backend/uploads/produits/*
-!backend/uploads/produits/.gitkeep
+# Les photos produit du catalogue de départ SONT versionnées (voir
+# Dockerfile) : elles doivent être présentes au clonage pour que le
+# catalogue s'affiche dès le premier déploiement, avant même qu'un volume
+# persistant existe. Seuls les fichiers ajoutés localement hors du dépôt
+# resteraient ignorés — en pratique aucun ne l'est plus.
 
 # --- Frontend (Node / Vite) ---------------------------------------------
 frontend/node_modules/

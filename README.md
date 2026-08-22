@@ -165,6 +165,66 @@ souci CORS à gérer en local.
   `whatsapp_proprietaire` (numéro international sans "+", ex: `221771234567`)
   et `adresse_boutique`.
 
+## Déploiement (Vercel + Railway, gratuit)
+
+Alternative moderne à l'hébergement mutualisé ci-dessus : frontend sur
+**Vercel**, API + MySQL sur **Railway**. Nécessite un compte sur chacun
+(gratuits pour démarrer) — les deux se connectent directement au dépôt
+GitHub, chaque `git push` redéploie automatiquement.
+
+### 1. Railway — API + base de données
+
+1. Sur [railway.app](https://railway.app), *New Project* → **Deploy from
+   GitHub repo** → sélectionnez ce dépôt.
+2. *Add a service* → **Database → MySQL** (Railway crée les identifiants
+   automatiquement).
+3. Sur le service créé depuis le dépôt : **Settings → Root Directory** =
+   `backend` (c'est là que se trouve le `Dockerfile`, détecté automatiquement).
+4. **Settings → Volumes** : ajoutez un volume monté sur `/var/www/html/uploads/produits`
+   — sans ça, les photos ajoutées depuis l'admin seraient perdues à chaque
+   redéploiement. Le volume est vide au premier démarrage : `docker-entrypoint.sh`
+   y recopie automatiquement les photos déjà présentes dans l'image (voir
+   [Notes techniques](#notes-techniques)).
+5. **Variables** du service API (`${{ }}` référence les variables du service
+   MySQL créé à l'étape 2 — Railway les propose en autocomplétion) :
+   ```
+   DB_HOST=${{MySQL.MYSQLHOST}}
+   DB_PORT=${{MySQL.MYSQLPORT}}
+   DB_NAME=${{MySQL.MYSQLDATABASE}}
+   DB_USER=${{MySQL.MYSQLUSER}}
+   DB_PASS=${{MySQL.MYSQLPASSWORD}}
+   JWT_SECRET=<généré avec php -r "echo bin2hex(random_bytes(32));">
+   CORS_ALLOWED_ORIGINS=https://<votre-projet>.vercel.app
+   APP_URL=https://<url-publique-railway-du-service>
+   ```
+6. **Settings → Networking → Generate Domain** pour obtenir l'URL publique
+   de l'API (ex: `gestion-boutique-api.up.railway.app`).
+7. Importez le schéma dans la base Railway (connectez-vous avec les
+   identifiants `MYSQL*` donnés par Railway, via `mysql` en local ou un
+   client graphique) :
+   ```bash
+   mysql -h <MYSQLHOST> -P <MYSQLPORT> -u <MYSQLUSER> -p<MYSQLPASSWORD> < database/schema.sql
+   ```
+
+### 2. Vercel — frontend
+
+1. Sur [vercel.com](https://vercel.com), *Add New → Project* → importez
+   ce dépôt.
+2. **Root Directory** = `frontend`. Framework détecté automatiquement
+   (Vite) ; build command et output (`dist/`) n'ont rien à changer.
+3. **Environment Variables** :
+   ```
+   VITE_API_URL=https://<url-publique-railway-de-l'étape-1.6>
+   ```
+4. *Deploy*. Redéployez (ou déclenchez un nouveau déploiement) si vous
+   changez `VITE_API_URL` après coup — les variables d'env sont figées au
+   moment du build côté Vite.
+
+### Après déploiement
+
+Mêmes étapes que pour l'hébergement mutualisé : changez les mots de passe
+de démo (page **Utilisateurs**) et les infos de la table `parametres`.
+
 ## PWA & hors-ligne
 
 - L'app est installable (bouton "Ajouter à l'écran d'accueil" sur mobile,
@@ -191,12 +251,10 @@ souci CORS à gérer en local.
   Le stock est décrémenté à l'entrée dans le statut `livree`, et recrédité
   si une commande quitte ce statut (annulation après livraison).
 - **Build Node 18** : `vite-plugin-pwa` (via `workbox-build`) dépend d'un
-  `crypto` global disponible nativement à partir de Node ≥ 19. Sous Node 18,
-  lancez le build avec :
-  ```bash
-  NODE_OPTIONS=--experimental-global-webcrypto npm run build
-  ```
-  Sous Node ≥ 20, `npm run build` fonctionne directement sans cette variable.
+  `crypto` global disponible nativement à partir de Node ≥ 19. Le script
+  `npm run build` définit déjà `NODE_OPTIONS=--experimental-global-webcrypto`
+  pour que ça fonctionne aussi sous Node 18 sans étape manuelle (inoffensif
+  sous Node ≥ 20, qui a `crypto` nativement).
 
 ## Roadmap v2 (architecture prévue, non codée)
 
