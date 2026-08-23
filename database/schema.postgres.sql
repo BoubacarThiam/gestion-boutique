@@ -259,13 +259,13 @@ INSERT INTO produits (id, categorie_id, nom, description, prix_achat, prix_vente
     (35, 1, 'Lunette de vue ronde grise',                'Monture translucide grise, verres clairs',            6000, 12000, 3, 1, '/uploads/produits/produit_lunette22.jpeg', 1),
     -- Arrivage lunettes #3 : gamme "original" sans monture, verres
     -- polycarbonate, tarif plus premium.
-    (36, 1, 'Lunette sans monture grise branches dorées',   'Sans cerclage, verres polycarbonate fumés, branches dorées',       17000, 35000, 3, 1, '/uploads/produits/produit_lunette23.jpeg', 1),
-    (37, 1, 'Lunette sans monture dégradée branches bois',  'Sans cerclage, verres polycarbonate dégradés, branches bois',      17000, 35000, 3, 1, '/uploads/produits/produit_lunette24.jpeg', 1),
-    (38, 1, 'Lunette sans monture claire pont doré',        'Sans cerclage, verres polycarbonate clairs, pont doré',            17000, 35000, 3, 1, '/uploads/produits/produit_lunette25.jpeg', 1),
-    (39, 1, 'Lunette sans monture fumée branches noires',   'Sans cerclage, verres polycarbonate fumés, branches noires',       17000, 35000, 3, 1, '/uploads/produits/produit_lunette26.jpeg', 1),
-    (40, 1, 'Lunette sans monture carrée strass dorés',     'Sans cerclage, verres polycarbonate carrés, charnières strass',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette27.jpeg', 1),
-    (41, 1, 'Lunette sans monture rectangulaire argentée',  'Sans cerclage, verres polycarbonate, charnières argentées',        17000, 35000, 3, 1, '/uploads/produits/produit_lunette28.jpeg', 1),
-    (42, 1, 'Lunette sans monture grise charnières ornées', 'Sans cerclage, verres polycarbonate, charnières dorées ornées',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette29.jpeg', 1),
+    (36, 1, 'Lunette Original grise branches dorées',       'Sans cerclage, verres polycarbonate fumés, branches dorées',       17000, 35000, 3, 1, '/uploads/produits/produit_lunette23.jpeg', 1),
+    (37, 1, 'Lunette Original dégradée branches bois',      'Sans cerclage, verres polycarbonate dégradés, branches bois',      17000, 35000, 3, 1, '/uploads/produits/produit_lunette24.jpeg', 1),
+    (38, 1, 'Lunette Original claire pont doré',            'Sans cerclage, verres polycarbonate clairs, pont doré',            17000, 35000, 3, 1, '/uploads/produits/produit_lunette25.jpeg', 1),
+    (39, 1, 'Lunette Original fumée branches noires',       'Sans cerclage, verres polycarbonate fumés, branches noires',       17000, 35000, 3, 1, '/uploads/produits/produit_lunette26.jpeg', 1),
+    (40, 1, 'Lunette Original carrée strass dorés',         'Sans cerclage, verres polycarbonate carrés, charnières strass',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette27.jpeg', 1),
+    (41, 1, 'Lunette Original rectangulaire argentée',      'Sans cerclage, verres polycarbonate, charnières argentées',        17000, 35000, 3, 1, '/uploads/produits/produit_lunette28.jpeg', 1),
+    (42, 1, 'Lunette Original grise charnières ornées',     'Sans cerclage, verres polycarbonate, charnières dorées ornées',    17000, 35000, 3, 1, '/uploads/produits/produit_lunette29.jpeg', 1),
     -- Arrivage montres squelette (suite)
     (24, 2, 'Montre squelette verte acier doré',      'Cadran effet squelette vert, bracelet acier bicolore',      7500, 25000, 3, 1, '/uploads/produits/produit_montre04.jpeg', 1),
     (25, 2, 'Montre squelette blanche acier doré',    'Cadran effet squelette blanc/or, bracelet acier bicolore',  7500, 25000, 3, 1, '/uploads/produits/produit_montre05.jpeg', 1),

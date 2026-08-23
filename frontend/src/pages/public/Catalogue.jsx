@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { catalogueApi } from '../../api/public'
 import { urlFichier } from '../../api/client'
@@ -64,6 +64,18 @@ export default function Catalogue() {
   const categorieMontres = categories.find((c) => c.nom === 'Montres')
   const afficherAnimationMontres = categorieMontres && categorieActive === categorieMontres.id
 
+  // La section (sticky, 300vh) doit être "accrochée" en haut de l'écran
+  // pour que les 4 images soient bien centrées à l'apparition — sinon,
+  // juste après le clic sur "Montres", elle démarre en dessous du pli et
+  // le centre visuel tombe hors de l'écran tant qu'on n'a pas scrollé.
+  const refAnimationMontres = useRef(null)
+  useEffect(() => {
+    if (afficherAnimationMontres) {
+      refAnimationMontres.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [afficherAnimationMontres])
+
   // Halo lumineux (GlowCard) uniquement quand la catégorie "Lunettes" est sélectionnée.
   const categorieLunettes = categories.find((c) => c.nom === 'Lunettes')
   const afficherGlowLunettes = categorieLunettes && categorieActive === categorieLunettes.id
@@ -124,7 +136,7 @@ export default function Catalogue() {
       {afficherAnimationMontres && (
         // Casse la largeur max/padding du <main> parent pour occuper tout l'écran,
         // nécessaire aux unités vw utilisées par l'animation.
-        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+        <div ref={refAnimationMontres} className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
           <ScrollChoreography images={IMAGES_HERO_MONTRES} />
         </div>
       )}
