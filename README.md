@@ -72,11 +72,17 @@ gestion-boutique/
 ### 1. Base de données
 
 ```bash
-mysql -u root -p < database/schema.sql
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS gestion_boutique CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root -p gestion_boutique < database/schema.sql
 ```
 
-Cela crée la base `gestion_boutique`, ses tables, et des données de test
-(catégories, produits, un admin, un employé, quelques commandes).
+La première commande crée la base, la seconde ses tables et des données de
+test (catégories, produits, un admin, un employé, quelques commandes).
+`schema.sql` ne crée pas la base lui-même : sur un hébergement mutualisé
+(InfinityFree, cPanel...), la base est déjà créée par l'hébergeur et votre
+utilisateur MySQL n'a généralement pas le droit d'en créer une autre —
+importez-le directement dans la base existante via phpMyAdmin (onglet
+*Import*).
 
 ### 2. Backend
 
@@ -186,11 +192,15 @@ automatiquement (sauf Supabase, qui n'a pas de code à redéployer).
    **Run**. Ce fichier contient la même structure et les mêmes données que
    `database/schema.sql` (MySQL), juste en syntaxe PostgreSQL — voir
    [Notes techniques](#notes-techniques).
-3. **Settings → Database → Connection string** (onglet *URI*, section
-   *Connection parameters* en dessous) : notez `Host`, `Port` (5432),
-   `Database name` (`postgres`), `User` (`postgres`) et le mot de passe
-   choisi à l'étape 1 — ce sont les 5 valeurs `DB_*` à utiliser à l'étape
-   suivante.
+3. **Settings → Database → Connection string** : copiez la chaîne
+   **Session pooler** (port `5432` — pas *Transaction pooler*/`6543` : le
+   backend fait de vraies requêtes préparées PDO et utilise
+   `lastInsertId()`, qui ont besoin d'une connexion stable le temps d'une
+   requête HTTP, ce que le mode transaction du pooler ne garantit pas).
+   Format : `postgresql://postgres.<ref-projet>:<mot-de-passe>@aws-x-region.pooler.supabase.com:5432/postgres`
+   — le `User` à retenir est `postgres.<ref-projet>` en entier (pas juste
+   `postgres`). Avec le mot de passe choisi à l'étape 1, ce sont les 5
+   valeurs `DB_*` à utiliser à l'étape suivante.
 
 ### 2. Railway — API
 
@@ -207,10 +217,10 @@ automatiquement (sauf Supabase, qui n'a pas de code à redéployer).
    1.3) :
    ```
    DB_DRIVER=pgsql
-   DB_HOST=<Host Supabase>
+   DB_HOST=<host du pooler Supabase, ex. aws-1-eu-west-1.pooler.supabase.com>
    DB_PORT=5432
    DB_NAME=postgres
-   DB_USER=postgres
+   DB_USER=postgres.<ref-projet Supabase>
    DB_PASS=<mot de passe Supabase>
    JWT_SECRET=<généré avec php -r "echo bin2hex(random_bytes(32));">
    CORS_ALLOWED_ORIGINS=https://<votre-projet>.vercel.app

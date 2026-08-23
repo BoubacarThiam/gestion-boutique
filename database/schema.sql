@@ -5,24 +5,28 @@
 -- Moteur : MySQL / MariaDB — compatible hébergement mutualisé (cPanel)
 --
 -- Contenu de ce fichier :
---   1. Création de la base
---   2. Création des tables (structure)
---   3. Données de test (seed) : utilisateurs, catégories, produits,
+--   1. Création des tables (structure)
+--   2. Données de test (seed) : utilisateurs, catégories, produits,
 --      mouvements de stock, clients, commandes
 --
+-- Ce fichier suppose que la base existe déjà et est déjà sélectionnée
+-- (pas de CREATE DATABASE / USE : un utilisateur MySQL d'hébergement
+-- mutualisé n'a en général le droit d'écrire que dans LA base qui lui a
+-- été attribuée, pas d'en créer une autre — voir #1044 "Accès refusé").
+--
 -- Import :
---   mysql -u <user> -p < schema.sql
---   (ou via phpMyAdmin sur l'hébergement mutualisé)
+--   - phpMyAdmin (hébergement mutualisé, ex. InfinityFree) : ouvrez
+--     phpMyAdmin depuis la base déjà créée par votre hébergeur (bouton
+--     "phpMyAdmin" à côté du nom de la base), onglet Import, choisissez
+--     ce fichier, Exécuter.
+--   - CLI, en local : créez d'abord la base, puis importez dedans :
+--       mysql -u <user> -p -e "CREATE DATABASE IF NOT EXISTS gestion_boutique CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+--       mysql -u <user> -p gestion_boutique < schema.sql
 -- =====================================================================
 
 SET NAMES utf8mb4;
 SET time_zone = '+00:00';
 SET FOREIGN_KEY_CHECKS = 0;
-
-CREATE DATABASE IF NOT EXISTS gestion_boutique
-    CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-USE gestion_boutique;
 
 -- =====================================================================
 -- 1. STRUCTURE
