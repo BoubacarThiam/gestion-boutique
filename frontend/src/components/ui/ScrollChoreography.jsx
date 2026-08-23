@@ -27,11 +27,13 @@ export function ScrollChoreography({ className, images }) {
     restDelta: 0.001,
   })
 
-  // Positions par défaut relatives au centre
-  const xLeft = '-20vw'
-  const xRight = '20vw'
-  const yTop = '-14vh'
-  const yBottom = '14vh'
+  // Positions par défaut relatives au centre — images agrandies (44vw/32vh
+  // au lieu de 36vw/24vh) donc écartement un peu plus large pour éviter
+  // qu'elles se chevauchent pendant la phase 1 (déplacement en diagonale).
+  const xLeft = '-24vw'
+  const xRight = '24vw'
+  const yTop = '-18vh'
+  const yBottom = '18vh'
 
   // Phase 1 : 0 - 0.3 (déplacement en diagonale)
   // Phase 2 : 0.35 - 0.65 (regroupement au centre)
@@ -54,14 +56,16 @@ export function ScrollChoreography({ className, images }) {
   const trY = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [yTop, yTop, yTop, '0vh', '0vh'])
 
   // Top Right (héro) : mise à l'échelle/expansion
-  const heroWidth = useTransform(smoothProgress, [0.65, 0.7, 0.9, 1], ['36vw', '36vw', '100vw', '100vw'])
-  const heroHeight = useTransform(smoothProgress, [0.65, 0.7, 0.9, 1], ['24vh', '24vh', '100vh', '100vh'])
+  const heroWidth = useTransform(smoothProgress, [0.65, 0.7, 0.9, 1], ['44vw', '44vw', '100vw', '100vw'])
+  const heroHeight = useTransform(smoothProgress, [0.65, 0.7, 0.9, 1], ['32vh', '32vh', '100vh', '100vh'])
 
   // Fondu des images en dessous du héro pendant son expansion
   const underImagesOpacity = useTransform(smoothProgress, [0.75, 0.85], [1, 0])
 
+  // Images agrandies (44vw/32vh, avant : 36vw/24vh) — plus imposantes à
+  // l'écran, cf. demande "plus grand".
   const baseImageClasses =
-    'absolute left-1/2 top-1/2 w-[36vw] h-[24vh] overflow-hidden -translate-x-1/2 -translate-y-1/2 bg-gray-100 shadow-2xl will-change-transform'
+    'absolute left-1/2 top-1/2 w-[44vw] h-[32vh] overflow-hidden -translate-x-1/2 -translate-y-1/2 bg-gray-100 shadow-2xl will-change-transform'
 
   return (
     <div ref={containerRef} className={cn('relative h-[300vh] w-full', className)}>

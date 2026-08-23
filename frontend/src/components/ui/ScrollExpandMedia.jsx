@@ -11,6 +11,13 @@ import { motion, useReducedMotion } from 'framer-motion'
  * Respecte prefers-reduced-motion : saute directement à l'état "déplié"
  * sans capturer le scroll (l'effet, purement décoratif, ne doit jamais
  * bloquer la navigation pour qui a demandé moins d'animations).
+ *
+ * `passerOutre` (bool) : le hero capture tout le scroll de la page tant
+ * qu'il n'est pas entièrement déplié — si un parent a besoin d'amener
+ * l'utilisateur plus bas sur la page AVANT ça (ex: sélection d'une
+ * catégorie qui déclenche un scroll automatique vers une section plus
+ * bas), passer `true` déplie le hero instantanément pour libérer le
+ * scroll normal de la page.
  */
 export default function ScrollExpandMedia({
   mediaSrc,
@@ -19,6 +26,7 @@ export default function ScrollExpandMedia({
   date,
   scrollToExpand,
   textBlend = false,
+  passerOutre = false,
   children,
 }) {
   const motionReduit = useReducedMotion()
@@ -27,6 +35,15 @@ export default function ScrollExpandMedia({
   const [mediaFullyExpanded, setMediaFullyExpanded] = useState(motionReduit)
   const [touchStartY, setTouchStartY] = useState(0)
   const [isMobileState, setIsMobileState] = useState(false)
+
+  useEffect(() => {
+    if (passerOutre && !mediaFullyExpanded) {
+      setScrollProgress(1)
+      setShowContent(true)
+      setMediaFullyExpanded(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [passerOutre])
 
   const sectionRef = useRef(null)
 

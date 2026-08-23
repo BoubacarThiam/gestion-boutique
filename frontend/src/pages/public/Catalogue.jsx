@@ -92,6 +92,10 @@ export default function Catalogue() {
           title="Bienvenue chez TDMGBC"
           date="Collection 2026"
           scrollToExpand="Faites défiler pour découvrir"
+          // Dès qu'on filtre par catégorie ou qu'on cherche, on déplie le
+          // hero instantanément : sinon il capture le scroll et empêche
+          // d'atteindre le catalogue (et l'animation Montres) en dessous.
+          passerOutre={categorieActive !== null || recherche.trim() !== ''}
         />
       </div>
 
