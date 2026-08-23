@@ -202,7 +202,7 @@ INSERT INTO parametres (cle, valeur) VALUES
 -- (hash bcrypt généré via password_hash() — à changer en production)
 -- ---------------------------------------------------------------------
 INSERT INTO utilisateurs (nom, telephone, email, mot_de_passe_hash, role, actif) VALUES
-    ('Modou Ba',      '221771234567', 'modou.ba@example.sn',     '$2y$10$hzlvSEJ0Mzwi5XmycqajSeScOLauKd8bXpsb43o4Kaog61sPBHJ/K', 'admin',  1),
+    ('Abdou Karim',   '221771234567', 'abdou.karim@example.sn',  '$2y$10$hzlvSEJ0Mzwi5XmycqajSeScOLauKd8bXpsb43o4Kaog61sPBHJ/K', 'admin',  1),
     ('Awa Ndiaye',    '221781112233', 'awa.ndiaye@example.sn',   '$2y$10$jJiO06fLNPbsXQM0h9FOv.wSRs8HK7HtSiXIXYxZem6xRb6FIkupu', 'employe', 1);
 
 -- ---------------------------------------------------------------------

@@ -60,10 +60,10 @@ export default function Rapports() {
       ) : (
         <>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <CarteStat titre="Commandes livrées" valeur={ventes.total.nombre_commandes} sousTitre="sur la période" />
-            <CarteStat titre="Chiffre d'affaires" valeur={formaterFCFA(ventes.total.chiffre_affaires)} sousTitre="sur la période" accent="text-marque-700" />
-            <CarteStat titre="Valeur du stock (achat)" valeur={formaterFCFA(valeurStock.valeur_achat)} sousTitre={`${valeurStock.unites_en_stock} unités`} />
-            <CarteStat titre="Valeur du stock (vente)" valeur={formaterFCFA(valeurStock.valeur_vente_potentielle)} sousTitre="potentiel si tout vendu" />
+            <CarteStat icone="✅" titre="Commandes livrées" valeur={ventes.total.nombre_commandes} sousTitre="sur la période" />
+            <CarteStat icone="💰" titre="Chiffre d'affaires" valeur={formaterFCFA(ventes.total.chiffre_affaires)} sousTitre="sur la période" accent="text-marque-700" />
+            <CarteStat icone="📦" titre="Valeur du stock (achat)" valeur={formaterFCFA(valeurStock.valeur_achat)} sousTitre={`${valeurStock.unites_en_stock} unités`} />
+            <CarteStat icone="💹" titre="Valeur du stock (vente)" valeur={formaterFCFA(valeurStock.valeur_vente_potentielle)} sousTitre="potentiel si tout vendu" />
           </div>
 
           <section className="carte p-4">
