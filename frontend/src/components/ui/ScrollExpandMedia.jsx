@@ -118,6 +118,11 @@ export default function ScrollExpandMedia({
   const firstWord = title ? title.split(' ')[0] : ''
   const restOfTitle = title ? title.split(' ').slice(1).join(' ') : ''
 
+  // Ombre portée marquée : garantit la lisibilité du texte quel que soit
+  // le fond (photo claire ou sombre) sous le titre, sans dépendre d'un
+  // mode de fusion (mix-blend) au rendu imprévisible selon l'image.
+  const ombreTexte = '0 2px 16px rgba(0,0,0,0.65), 0 1px 4px rgba(0,0,0,0.9)'
+
   return (
     <div ref={sectionRef} className="transition-colors duration-700 ease-in-out overflow-x-hidden">
       <section className="relative flex flex-col items-center justify-start min-h-[100dvh]">
@@ -161,12 +166,18 @@ export default function ScrollExpandMedia({
 
                 <div className="flex flex-col items-center text-center relative z-10 mt-4 transition-none">
                   {date && (
-                    <p className="text-2xl text-or-100" style={{ transform: `translateX(-${textTranslateX}vw)` }}>
+                    <p
+                      className="text-2xl text-or-100"
+                      style={{ transform: `translateX(-${textTranslateX}vw)`, textShadow: ombreTexte }}
+                    >
                       {date}
                     </p>
                   )}
                   {scrollToExpand && (
-                    <p className="text-or-100 font-medium text-center" style={{ transform: `translateX(${textTranslateX}vw)` }}>
+                    <p
+                      className="text-or-100 font-medium text-center"
+                      style={{ transform: `translateX(${textTranslateX}vw)`, textShadow: ombreTexte }}
+                    >
                       {scrollToExpand}
                     </p>
                   )}
@@ -180,13 +191,13 @@ export default function ScrollExpandMedia({
               >
                 <motion.h2
                   className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white transition-none"
-                  style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                  style={{ transform: `translateX(-${textTranslateX}vw)`, textShadow: ombreTexte }}
                 >
                   {firstWord}
                 </motion.h2>
                 <motion.h2
                   className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-center text-white transition-none"
-                  style={{ transform: `translateX(${textTranslateX}vw)` }}
+                  style={{ transform: `translateX(${textTranslateX}vw)`, textShadow: ombreTexte }}
                 >
                   {restOfTitle}
                 </motion.h2>

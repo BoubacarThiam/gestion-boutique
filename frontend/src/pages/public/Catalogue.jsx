@@ -77,10 +77,9 @@ export default function Catalogue() {
         <ScrollExpandMedia
           mediaSrc={urlFichier('/uploads/produits/produit_lunette23.jpeg')}
           bgImageSrc={connexionFond}
-          title="Bienvenue chez Teranga"
+          title="Bienvenue chez TDMGBC"
           date="Collection 2026"
           scrollToExpand="Faites défiler pour découvrir"
-          textBlend
         />
       </div>
 
