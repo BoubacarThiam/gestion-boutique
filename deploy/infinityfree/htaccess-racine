@@ -1,0 +1,53 @@
+# =====================================================================
+# .htaccess RACINE pour un déploiement InfinityFree (ou tout hébergement
+# mutualisé à un seul domaine) : frontend (contenu de frontend/dist/) ET
+# backend (dossier backend/) cohabitent dans le même htdocs/.
+#
+# À la racine du site (htdocs/), en plus de :
+#   - htdocs/index.html, htdocs/assets/... (contenu de frontend/dist/)
+#   - htdocs/backend/...                   (contenu de backend/, avec son
+#                                            propre .env de production)
+#
+# Ce fichier REMPLACE le .htaccess généré par défaut dans frontend/dist/
+# (qui ne gère que le fallback SPA) : il route en plus /api/... et
+# /uploads/... vers le backend PHP.
+#
+# Voir README.md, section "Déploiement InfinityFree" pour la procédure
+# complète (upload FTP + import de database/schema.sql via phpMyAdmin).
+# =====================================================================
+RewriteEngine On
+
+# Beaucoup d'hébergements Apache/PHP ne transmettent PAS l'en-tête
+# Authorization à PHP par défaut — ce qui casse toute requête authentifiée
+# (401 "Authentification requise" juste après connexion, page blanche côté
+# app). Cette règle le recopie dans une variable d'environnement que
+# backend/src/Auth/Middleware.php sait lire en repli.
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+
+# API : le routeur backend lit REQUEST_URI (toujours "/api/...", inchangé
+# par cette réécriture interne) pour son propre routage.
+RewriteRule ^api/(.*)$ backend/index.php [QSA,L]
+
+# Photos produits uploadées, servies directement depuis backend/uploads/.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^uploads/(.*)$ backend/uploads/$1 [L]
+
+# SPA : toute route qui ne correspond pas à un fichier/dossier réel
+# (ex: /gestion/produits rechargé directement) sert index.html.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+# Cache les fichiers sensibles s'ils sont jamais accédés directement.
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(env|sql|log)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(env|sql|log)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

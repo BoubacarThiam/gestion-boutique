@@ -3,6 +3,16 @@
 # sauf les fichiers/dossiers qui existent réellement (ex: /uploads/...).
 # =====================================================================
 RewriteEngine On
+
+# Beaucoup d'hébergements Apache/PHP (mod_php, CGI/FastCGI) ne transmettent
+# PAS l'en-tête Authorization à PHP par défaut (getallheaders() ne le voit
+# pas) — ce qui casse toute requête authentifiée (401 "Authentification
+# requise" juste après connexion). Cette règle le recopie explicitement
+# dans une variable d'environnement que Middleware::extraireToken() sait
+# lire en repli ($_SERVER['HTTP_AUTHORIZATION']).
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]
