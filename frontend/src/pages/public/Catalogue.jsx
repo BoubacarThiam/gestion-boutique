@@ -8,6 +8,8 @@ import Spinner from '../../components/ui/Spinner'
 import EtatVide from '../../components/ui/EtatVide'
 import Alerte from '../../components/ui/Alerte'
 import ScrollChoreography from '../../components/ui/ScrollChoreography'
+import ScrollExpandMedia from '../../components/ui/ScrollExpandMedia'
+import connexionFond from '../../assets/connexion-fond.jpg'
 
 // Grille de résultats : les cartes apparaissent en cascade (fondu + léger
 // glissement) plutôt que toutes d'un coup — rejoue à chaque changement de
@@ -68,6 +70,20 @@ export default function Catalogue() {
 
   return (
     <div className="flex flex-col gap-5">
+      {/* Hero plein écran : grossit au scroll pour révéler le catalogue.
+          Casse la largeur max/padding du <main> parent (même technique que
+          l'animation Montres plus bas), nécessaire au 100dvh/100vw utilisés. */}
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+        <ScrollExpandMedia
+          mediaSrc={urlFichier('/uploads/produits/produit_lunette23.jpeg')}
+          bgImageSrc={connexionFond}
+          title="Bienvenue chez Teranga"
+          date="Collection 2026"
+          scrollToExpand="Faites défiler pour découvrir"
+          textBlend
+        />
+      </div>
+
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Notre catalogue</h1>
         <p className="text-sm text-gray-500">Lunettes, montres et accessoires de téléphone — paiement à la livraison.</p>
