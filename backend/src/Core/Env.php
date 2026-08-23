@@ -49,6 +49,16 @@ class Env
 
     public static function get(string $cle, mixed $defaut = null): mixed
     {
+        // $_ENV d'abord : sur certains hébergements mutualisés (ex.
+        // InfinityFree), putenv() est dans disable_functions et n'a donc
+        // aucun effet — charger() peuple quand même $_ENV (simple tableau
+        // PHP, jamais restreint), donc c'est la source fiable. getenv()
+        // reste en repli pour les variables définies au niveau serveur
+        // (hors .env), qui elles n'apparaissent pas forcément dans $_ENV.
+        if (array_key_exists($cle, $_ENV)) {
+            return $_ENV[$cle];
+        }
+
         $valeur = getenv($cle);
         return $valeur === false ? $defaut : $valeur;
     }
