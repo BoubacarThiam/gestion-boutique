@@ -3,7 +3,6 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { catalogueApi } from '../../api/public'
 import { urlFichier } from '../../api/client'
 import CarteProduit from '../../components/produits/CarteProduit'
-import CarteProduitLunette from '../../components/produits/CarteProduitLunette'
 import Spinner from '../../components/ui/Spinner'
 import EtatVide from '../../components/ui/EtatVide'
 import Alerte from '../../components/ui/Alerte'
@@ -75,10 +74,6 @@ export default function Catalogue() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [afficherAnimationMontres])
-
-  // Halo lumineux (GlowCard) uniquement quand la catégorie "Lunettes" est sélectionnée.
-  const categorieLunettes = categories.find((c) => c.nom === 'Lunettes')
-  const afficherGlowLunettes = categorieLunettes && categorieActive === categorieLunettes.id
 
   return (
     <div className="flex flex-col gap-5">
@@ -158,7 +153,7 @@ export default function Catalogue() {
         >
           {produits.map((p) => (
             <motion.div key={p.id} variants={motionReduit ? undefined : VARIANTE_CARTE}>
-              {afficherGlowLunettes ? <CarteProduitLunette produit={p} /> : <CarteProduit produit={p} />}
+              <CarteProduit produit={p} />
             </motion.div>
           ))}
         </motion.div>
