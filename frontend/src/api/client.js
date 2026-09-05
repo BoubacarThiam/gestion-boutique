@@ -45,6 +45,48 @@ class ErreurApi extends Error {
   }
 }
 
+// Clé de garde : une seule tentative de récupération par onglet, pour ne
+// jamais boucler sur un rechargement si le HTML reçu vient d'autre chose.
+const CLE_VERIF_HEBERGEUR = 'gestion_boutique_verif_hebergeur'
+
+/**
+ * Détecte la page de vérification anti-robot des hébergements mutualisés
+ * gratuits (InfinityFree & co) : un HTML servi en HTTP 200 à la place de la
+ * réponse attendue, qui pose un cookie `__test` via un déchiffrement AES en
+ * JavaScript avant de rejouer la requête.
+ */
+function estVerificationHebergeur(texte) {
+  return texte.includes('slowAES') || texte.includes('aes.js') || texte.includes('__test=')
+}
+
+/**
+ * Rejoue une vraie navigation réseau pour laisser le navigateur exécuter la
+ * page de vérification et reposer son cookie (valable 6h).
+ *
+ * Le service worker sert `index.html` et les assets depuis son précache :
+ * l'app peut donc rester ouverte des jours sans qu'aucune navigation
+ * n'atteigne le réseau, pendant que le cookie de vérification, lui, expire.
+ * Les appels API se prennent alors la page de vérification en boucle. On
+ * désinscrit le service worker (`registerSW.js` le réinstalle au chargement
+ * suivant) pour garantir que le rechargement parte bien jusqu'au serveur.
+ */
+async function relancerVerificationHebergeur() {
+  try {
+    if (sessionStorage.getItem(CLE_VERIF_HEBERGEUR)) return
+    sessionStorage.setItem(CLE_VERIF_HEBERGEUR, '1')
+  } catch {
+    return // navigation privée verrouillée : on laisse remonter l'erreur
+  }
+
+  try {
+    const inscriptions = (await navigator.serviceWorker?.getRegistrations?.()) ?? []
+    await Promise.all(inscriptions.map((inscription) => inscription.unregister()))
+  } catch {
+    // Pas de service worker (ou API indisponible) : le rechargement suffit.
+  }
+  window.location.reload()
+}
+
 /**
  * Appel générique à l'API.
  * @param {string} chemin  ex: '/api/produits'
@@ -73,11 +115,22 @@ async function requete(chemin, options = {}) {
     throw new ErreurApi('Connexion impossible. Vérifiez votre connexion internet.', 0)
   }
 
-  let donnees = null
+  // L'API répond toujours en JSON (voir backend/src/Core/Response.php) : une
+  // réponse d'un autre type signale une page intercalée par l'hébergement, pas
+  // une donnée exploitable. Sans ce garde-fou, la fonction renvoyait `null` et
+  // l'appelant plantait plus loin sur `donnees.produits` — d'où un « Vérifiez
+  // votre connexion » trompeur alors que le réseau va très bien.
   const type = reponse.headers.get('content-type') || ''
-  if (type.includes('application/json')) {
-    donnees = await reponse.json().catch(() => null)
+  if (!type.includes('application/json')) {
+    const texte = await reponse.text().catch(() => '')
+    if (estVerificationHebergeur(texte)) {
+      relancerVerificationHebergeur()
+      throw new ErreurApi('Vérification de sécurité de l\'hébergeur en cours…', reponse.status)
+    }
+    throw new ErreurApi(`Réponse inattendue du serveur (${reponse.status}).`, reponse.status)
   }
+
+  const donnees = await reponse.json().catch(() => null)
 
   if (!reponse.ok) {
     const message = donnees?.erreur || `Erreur (${reponse.status})`
